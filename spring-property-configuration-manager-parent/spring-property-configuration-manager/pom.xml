@@ -4,9 +4,8 @@
   <parent>
     <groupId>eu.ecodex.utils</groupId>
     <artifactId>spring-property-configuration-manager-parent</artifactId>
-    <version>0.0.22-RELEASE</version>
+    <version>0.1.0-SNAPSHOT</version>
   </parent>
-  <groupId>eu.ecodex.utils</groupId>
   <artifactId>spring-property-configuration-manager</artifactId>
   <dependencyManagement>
     <dependencies>
@@ -20,6 +19,13 @@
     </dependencies>
   </dependencyManagement>
   <dependencies>
+    <!--ecodex utils libs-->
+    <dependency>
+      <groupId>eu.ecodex.utils</groupId>
+      <artifactId>spring-property-configuration-manager-api</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <!--spring libs-->
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-core</artifactId>
@@ -29,17 +35,13 @@
       <artifactId>spring-context</artifactId>
     </dependency>
     <dependency>
-      <groupId>eu.ecodex.utils</groupId>
-      <artifactId>spring-property-configuration-manager-api</artifactId>
-      <version>${project.version}</version>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot</artifactId>
     </dependency>
+    <!--other libs-->
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-api</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot</artifactId>
     </dependency>
     <dependency>
       <groupId>javax.validation</groupId>
@@ -50,6 +52,7 @@
       <artifactId>hibernate-validator</artifactId>
       <scope>test</scope>
     </dependency>
+    <!--test libs-->
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-api</artifactId>

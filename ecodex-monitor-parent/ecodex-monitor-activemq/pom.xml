@@ -4,16 +4,22 @@
   <parent>
     <groupId>eu.ecodex.utils.monitor</groupId>
     <artifactId>ecodex-monitor-parent</artifactId>
-    <version>0.0.22-RELEASE</version>
+    <version>0.1.0-SNAPSHOT</version>
   </parent>
-  <groupId>eu.ecodex.utils.monitor</groupId>
   <artifactId>ecodex-monitor-activemq</artifactId>
   <dependencies>
+    <!--ecodex libs-->
+    <dependency>
+      <groupId>eu.ecodex.utils</groupId>
+      <artifactId>spring-tomcat-war-starter</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <!--activemq libs-->
     <dependency>
       <groupId>org.apache.activemq</groupId>
       <artifactId>activemq-web</artifactId>
-      <!--            <version>5.15.11</version>-->
-      <!--            <scope>provided</scope>-->
+      <!--<version>5.15.11</version>-->
+      <!--<scope>provided</scope>-->
       <exclusions>
         <exclusion>
           <artifactId>activemq-all</artifactId>
@@ -30,10 +36,10 @@
       </exclusions>
     </dependency>
     <dependency>
-      <groupId>eu.ecodex.utils</groupId>
-      <artifactId>spring-tomcat-war-starter</artifactId>
-      <version>${project.version}</version>
+      <groupId>org.apache.activemq</groupId>
+      <artifactId>activemq-kahadb-store</artifactId>
     </dependency>
+    <!--spring libs-->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-actuator</artifactId>
@@ -41,14 +47,6 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-security</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-api</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -66,21 +64,26 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-activemq</artifactId>
-      <!--            <scope>test</scope>-->
-    </dependency>
-    <dependency>
-      <groupId>org.apache.activemq</groupId>
-      <artifactId>activemq-kahadb-store</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter</artifactId>
-      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
       <scope>provided</scope>
+    </dependency>
+    <!--other libs-->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+    </dependency>
+    <!--test libs-->
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 </project>

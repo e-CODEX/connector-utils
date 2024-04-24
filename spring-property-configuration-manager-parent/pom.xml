@@ -4,12 +4,14 @@
   <parent>
     <groupId>eu.ecodex.utils</groupId>
     <artifactId>ecodex-utils-parent</artifactId>
-    <version>0.0.22-RELEASE</version>
+    <version>0.1.0-SNAPSHOT</version>
   </parent>
-  <groupId>eu.ecodex.utils</groupId>
   <artifactId>spring-property-configuration-manager-parent</artifactId>
   <packaging>pom</packaging>
-  <description>Parent project of multiple libraries which will assist on ConfigurationProperty management within an spring boot application</description>
+  <description>
+    Parent project of multiple libraries which will assist on ConfigurationProperty management within a
+    spring boot application
+  </description>
   <modules>
     <module>spring-property-configuration-manager-api</module>
     <module>spring-property-configuration-manager</module>

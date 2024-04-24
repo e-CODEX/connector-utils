@@ -4,22 +4,34 @@
   <parent>
     <groupId>eu.ecodex.utils</groupId>
     <artifactId>ecodex-utils-parent</artifactId>
-    <version>0.0.22-RELEASE</version>
+    <version>0.1.0-SNAPSHOT</version>
   </parent>
-  <!--    <groupId>eu.ecodex.utils</groupId>-->
   <artifactId>ecodex-dependencies</artifactId>
   <description>This project contains a useful set of dependencies and can be imported as a pom and will help to manage e-Codex dependencies</description>
   <properties>
-    <swagger.version>2.9.2</swagger.version>
+    <com.sun.jaxb-jxc.version>2.3.2</com.sun.jaxb-jxc.version>
+    <com.sun.jaxb-core.version>2.3.0.1</com.sun.jaxb-core.version>
+    <javax.annotation-api.version>2.0.1.Final</javax.annotation-api.version>
+    <javax.javaee-api>8.0</javax.javaee-api>
+    <javax.jws-api>1.1</javax.jws-api>
+    <javax.validation-api.version>2.0.1.Final</javax.validation-api.version>
+    <javax.xml.jaxb-api.version>2.1</javax.xml.jaxb-api.version>
     <org.apache.cxf.version>3.3.9</org.apache.cxf.version>
-    <spring.cloud.version>2.2.6.RELEASE</spring.cloud.version>
-    <spring.boot.version>2.3.7.RELEASE</spring.boot.version>
+    <org.bouncycastle.bcpkix-jdk15on.version>1.64</org.bouncycastle.bcpkix-jdk15on.version>
+    <org.codehaus-jaxb2-maven-plugin>2.5.0</org.codehaus-jaxb2-maven-plugin>
+    <org.dbunit.version>2.6.0</org.dbunit.version>
+    <org.hibernate.hibernate-validator.version>6.1.2.Final</org.hibernate.hibernate-validator.version>
+    <org.lombok.version>1.18.32</org.lombok.version>
     <org.junit.jupiter.version>5.6.3</org.junit.jupiter.version>
-    <org.junit.jupiter.version>5.5.2</org.junit.jupiter.version>
+    <org.jvnet.maven-jaxb2-plugin.version>0.14.0</org.jvnet.maven-jaxb2-plugin.version>
+    <org.slf4j-api.version>1.7.30</org.slf4j-api.version>
+    <spring.boot.version>2.3.7.RELEASE</spring.boot.version>
+    <swagger.version>2.9.2</swagger.version>
     <vaadin.version>14.4.7</vaadin.version>
   </properties>
   <dependencyManagement>
     <dependencies>
+      <!--spring libs-->
       <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-dependencies</artifactId>
@@ -28,39 +40,11 @@
         <scope>import</scope>
       </dependency>
       <dependency>
-        <groupId>org.junit</groupId>
-        <artifactId>junit-bom</artifactId>
-        <version>${org.junit.jupiter.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <version>${spring.boot.version}</version>
       </dependency>
-      <dependency>
-        <groupId>org.slf4j</groupId>
-        <artifactId>slf4j-api</artifactId>
-        <version>1.7.30</version>
-      </dependency>
-      <dependency>
-        <groupId>com.vaadin</groupId>
-        <artifactId>vaadin-bom</artifactId>
-        <version>${vaadin.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.projectlombok</groupId>
-        <artifactId>lombok</artifactId>
-        <version>1.18.10</version>
-      </dependency>
-      <dependency>
-        <groupId>org.dbunit</groupId>
-        <artifactId>dbunit</artifactId>
-        <version>2.6.0</version>
-      </dependency>
-      <dependency>
-        <groupId>org.hibernate</groupId>
-        <artifactId>hibernate-validator</artifactId>
-        <version>6.1.2.Final</version>
-      </dependency>
+      <!--swagger libs-->
       <dependency>
         <groupId>io.springfox</groupId>
         <artifactId>springfox-swagger2</artifactId>
@@ -71,65 +55,67 @@
         <artifactId>springfox-swagger-ui</artifactId>
         <version>${swagger.version}</version>
       </dependency>
+      <!--javax libs-->
       <dependency>
         <groupId>javax.validation</groupId>
         <artifactId>validation-api</artifactId>
-        <version>2.0.1.Final</version>
+        <version>${javax.validation-api.version}</version>
       </dependency>
       <dependency>
         <groupId>javax.annotation</groupId>
         <artifactId>javax.annotation-api</artifactId>
-        <version>2.0.1.Final</version>
+        <version>${javax.annotation-api.version}</version>
       </dependency>
       <dependency>
         <groupId>javax.jws</groupId>
         <artifactId>javax.jws-api</artifactId>
-        <version>1.1</version>
+        <version>${javax.jws-api}</version>
       </dependency>
       <dependency>
         <groupId>javax</groupId>
         <artifactId>javaee-api</artifactId>
-        <version>8.0</version>
+        <version>${javax.javaee-api}</version>
       </dependency>
+      <!--apache cxf libs-->
       <dependency>
         <groupId>org.apache.cxf</groupId>
         <artifactId>cxf-rt-frontend-jaxws</artifactId>
-        <version>${cxf.version}</version>
+        <version>${org.apache.cxf.version}</version>
       </dependency>
       <dependency>
         <groupId>org.apache.cxf</groupId>
         <artifactId>cxf-rt-frontend-jaxrs</artifactId>
-        <version>${cxf.version}</version>
+        <version>${org.apache.cxf.version}</version>
       </dependency>
       <dependency>
         <groupId>org.apache.cxf</groupId>
         <artifactId>cxf-rt-transports-http</artifactId>
-        <version>${cxf.version}</version>
+        <version>${org.apache.cxf.version}</version>
       </dependency>
       <dependency>
         <groupId>org.apache.cxf</groupId>
         <artifactId>cxf-rt-bindings-soap</artifactId>
-        <version>${cxf.version}</version>
+        <version>${org.apache.cxf.version}</version>
       </dependency>
       <dependency>
         <groupId>org.apache.cxf</groupId>
         <artifactId>cxf-rt-transports-http-jetty</artifactId>
-        <version>${cxf.version}</version>
+        <version>${org.apache.cxf.version}</version>
       </dependency>
       <dependency>
         <groupId>org.apache.cxf</groupId>
         <artifactId>cxf-rt-core</artifactId>
-        <version>${cxf.version}</version>
+        <version>${org.apache.cxf.version}</version>
       </dependency>
       <dependency>
         <groupId>org.apache.cxf</groupId>
         <artifactId>cxf-spring-boot-starter-jaxws</artifactId>
-        <version>${cxf.version}</version>
+        <version>${org.apache.cxf.version}</version>
       </dependency>
       <dependency>
         <groupId>org.apache.cxf</groupId>
         <artifactId>cxf-spring-boot-starter</artifactId>
-        <version>${cxf.version}</version>
+        <version>${org.apache.cxf.version}</version>
         <exclusions>
           <exclusion>
             <artifactId>spring-boot-starter-logging</artifactId>
@@ -137,33 +123,29 @@
           </exclusion>
         </exclusions>
       </dependency>
+      <!--jaxb libs-->
       <dependency>
         <groupId>org.jvnet.jaxb2.maven2</groupId>
         <artifactId>maven-jaxb2-plugin</artifactId>
-        <version>0.14.0</version>
+        <version>${org.jvnet.maven-jaxb2-plugin.version}</version>
         <!-- deps  added so plugin can run with jdk 11 -->
       </dependency>
       <dependency>
         <groupId>com.sun.xml.bind</groupId>
         <artifactId>jaxb-jxc</artifactId>
-        <version>2.3.2</version>
+        <version>${com.sun.jaxb-jxc.version}</version>
       </dependency>
       <dependency>
         <groupId>com.sun.xml.bind</groupId>
         <artifactId>jaxb-core</artifactId>
-        <version>2.3.0.1</version>
+        <version>${com.sun.jaxb-core.version}</version>
       </dependency>
       <dependency>
         <groupId>javax.xml</groupId>
         <artifactId>jaxb-api</artifactId>
-        <version>2.1</version>
+        <version>${javax.xml.jaxb-api.version}</version>
       </dependency>
-      <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-maven-plugin</artifactId>
-        <version>${spring.boot.version}</version>
-      </dependency>
-      <!-- ecodex utils dependencies -->
+      <!--ecodex utils libs-->
       <dependency>
         <groupId>eu.ecodex.utils</groupId>
         <artifactId>spring-property-configuration-manager-api</artifactId>
@@ -189,47 +171,68 @@
         <artifactId>spring-tomcat-war-starter</artifactId>
         <version>${project.version}</version>
       </dependency>
-      <!-- maven plugins -->
-      <dependency>
-        <groupId>org.owasp</groupId>
-        <artifactId>dependency-check-maven</artifactId>
-        <version>5.0.0-M2</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.7.0</version>
-        <type>maven-plugin</type>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-resources-plugin</artifactId>
-        <version>3.0.2</version>
-        <type>maven-plugin</type>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-war-plugin</artifactId>
-        <version>3.2.2</version>
-        <type>maven-plugin</type>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <version>3.1.1</version>
-        <type>maven-plugin</type>
-      </dependency>
-      <dependency>
-        <groupId>org.codehaus.cargo</groupId>
-        <artifactId>cargo-maven2-plugin</artifactId>
-        <version>1.7.3</version>
-        <type>maven-plugin</type>
-      </dependency>
       <dependency>
         <groupId>eu.ecodex.utils</groupId>
         <artifactId>spring-property-configuration-validator</artifactId>
         <version>${project.version}</version>
       </dependency>
+      <!--other libs-->
+      <dependency>
+        <groupId>org.junit</groupId>
+        <artifactId>junit-bom</artifactId>
+        <version>${org.junit.jupiter.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>${org.slf4j-api.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.vaadin</groupId>
+        <artifactId>vaadin-bom</artifactId>
+        <version>${vaadin.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <version>${org.lombok.version}</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.hibernate</groupId>
+        <artifactId>hibernate-validator</artifactId>
+        <version>${org.hibernate.hibernate-validator.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.bouncycastle</groupId>
+        <artifactId>bcpkix-jdk15on</artifactId>
+        <version>${org.bouncycastle.bcpkix-jdk15on.version}</version>
+      </dependency>
+      <!--test libs -->
+      <dependency>
+        <groupId>org.dbunit</groupId>
+        <artifactId>dbunit</artifactId>
+        <version>${org.dbunit.version}</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
+  <dependencies>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+    </dependency>
+  </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>jaxb2-maven-plugin</artifactId>
+        <version>${org.codehaus-jaxb2-maven-plugin}</version>
+      </plugin>
+    </plugins>
+  </build>
 </project>

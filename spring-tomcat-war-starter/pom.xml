@@ -4,11 +4,13 @@
   <parent>
     <groupId>eu.ecodex.utils</groupId>
     <artifactId>ecodex-utils-parent</artifactId>
-    <version>0.0.22-RELEASE</version>
+    <version>0.1.0-SNAPSHOT</version>
   </parent>
-  <groupId>eu.ecodex.utils</groupId>
   <artifactId>spring-tomcat-war-starter</artifactId>
-  <description>Provides a a main class for starting a spring boot application on a tomcat. Setups the context in a way that the search path for spring.config.location is set to the tomcat application context</description>
+  <description>
+    Provides a main class for starting a spring boot application on a tomcat. Setups the context in a way that
+    the search path for spring.config.location is set to the tomcat application context
+  </description>
   <dependencyManagement>
     <dependencies>
       <dependency>

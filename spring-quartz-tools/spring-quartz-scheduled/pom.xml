@@ -4,13 +4,16 @@
   <parent>
     <groupId>eu.ecodex.utils</groupId>
     <artifactId>spring-quartz-tools</artifactId>
-    <version>0.0.22-RELEASE</version>
+    <version>0.1.0-SNAPSHOT</version>
   </parent>
-  <groupId>eu.ecodex.utils</groupId>
   <artifactId>spring-quartz-scheduled</artifactId>
-  <description>This project provides a Bean processor which replaces the org.springframework.scheduling.annotation.ScheduledAnnotationBeanPostProcessor of spring
-        and makes it possible to use the @org.springframework.scheduling.annotation.Scheduled with quartz</description>
+  <description>
+    This project provides a Bean processor which replaces the
+    org.springframework.scheduling.annotation.ScheduledAnnotationBeanPostProcessor of spring
+    and makes it possible to use the @org.springframework.scheduling.annotation.Scheduled with quartz
+  </description>
   <dependencies>
+    <!--spring libs-->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot</artifactId>
@@ -37,6 +40,11 @@
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-log4j2</artifactId>
+    </dependency>
+    <!--tests libs-->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
     </dependency>
@@ -50,10 +58,6 @@
       <artifactId>logging-tester</artifactId>
       <version>${project.version}</version>
       <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-log4j2</artifactId>
     </dependency>
   </dependencies>
 </project>
