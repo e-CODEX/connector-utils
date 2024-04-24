@@ -1,34 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>eu.ecodex.utils</groupId>
-    <artifactId>ecodex-utils-parent</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
-  </parent>
-  <groupId>eu.ecodex.utils.monitor</groupId>
-  <artifactId>ecodex-monitor-parent</artifactId>
-  <packaging>pom</packaging>
-  <description>
-    This project can be deployed as a war and will expose certificate states and activeMq queues over the spring actuator interface.
-    This will make monitoring of certificate and queue states in the e-Codex components easier.
-  </description>
-  <modules>
-    <module>ecodex-monitor-app</module>
-    <module>ecodex-monitor-certificates</module>
-    <module>ecodex-monitor-activemq</module>
-    <module>ecodex-monitor-gw-reachable</module>
-    <module>ecodex-monitor-common</module>
-  </modules>
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
         <groupId>eu.ecodex.utils</groupId>
-        <artifactId>ecodex-dependencies</artifactId>
-        <version>${project.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
+        <artifactId>ecodex-utils-parent</artifactId>
+        <version>0.1.0-SNAPSHOT</version>
+    </parent>
+    <groupId>eu.ecodex.utils.monitor</groupId>
+    <artifactId>ecodex-monitor-parent</artifactId>
+    <packaging>pom</packaging>
+    <description>
+        This project can be deployed as a war and will expose certificate states and activeMq queues over the spring
+        actuator interface. This will make monitoring of certificate and queue states in the e-Codex components easier.
+    </description>
+    <modules>
+        <module>ecodex-monitor-app</module>
+        <module>ecodex-monitor-certificates</module>
+        <module>ecodex-monitor-activemq</module>
+        <module>ecodex-monitor-gw-reachable</module>
+        <module>ecodex-monitor-common</module>
+    </modules>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>eu.ecodex.utils</groupId>
+                <artifactId>ecodex-dependencies</artifactId>
+                <version>${project.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 </project>
