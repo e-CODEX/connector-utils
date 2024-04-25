@@ -81,8 +81,7 @@
         <module>ecodex-configuration-utils</module>
     </modules>
     <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.release>21</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <build.information>version: ${project.version} (${maven.build.timestamp})</build.information>
@@ -101,10 +100,10 @@
         <maven.surefire-plugin.version>3.2.5</maven.surefire-plugin.version>
         <maven.war-plugin.version>3.4.0</maven.war-plugin.version>
         <!-- spring maven plugin -->
-        <spring.boot-maven-plugin.version>2.3.7.RELEASE</spring.boot-maven-plugin.version>
+        <spring.boot-maven-plugin.version>2.5.15</spring.boot-maven-plugin.version>
         <!-- codehaus maven plugins -->
         <org.codehaus.build-helper-maven-plugin.version>1.5</org.codehaus.build-helper-maven-plugin.version>
-        <org.codehaus-jaxb2-maven-plugin>2.5.0</org.codehaus-jaxb2-maven-plugin>
+        <org.codehaus-jaxb2-maven-plugin>3.2.0</org.codehaus-jaxb2-maven-plugin>
         <org.codehaus.mojo-plugin>2.5.0</org.codehaus.mojo-plugin>
     </properties>
     <build>
@@ -151,6 +150,7 @@
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>${maven.compiler-plugin.version}</version>
                     <configuration>
+                        <release>21</release>
                         <compilerArgs>
                             <arg>-parameters</arg>
                         </compilerArgs>
@@ -204,8 +204,7 @@
                             <additionalProperties>
                                 <encoding.source>${project.build.sourceEncoding}</encoding.source>
                                 <encoding.reporting>${project.reporting.outputEncoding}</encoding.reporting>
-                                <java.source>${maven.compiler.source}</java.source>
-                                <java.target>${maven.compiler.target}</java.target>
+                                <java.release>${maven.compiler.release}</java.release>
                                 <information>${build.information}</information>
                                 <number>${build.number}</number>
                             </additionalProperties>
@@ -253,7 +252,6 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <source>8</source>
                     <doclint>all,-missing</doclint>
                 </configuration>
             </plugin>
@@ -278,7 +276,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <configuration>
-                    <source>8</source>
                     <links>
                         <link>http://java.sun.com/javase/6/docs/api/</link>
                     </links>

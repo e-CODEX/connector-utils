@@ -15,12 +15,15 @@
     <properties>
         <com.sun.jaxb-jxc.version>2.3.2</com.sun.jaxb-jxc.version>
         <com.sun.jaxb-core.version>2.3.0.1</com.sun.jaxb-core.version>
+        <com.sun.xml.jaxb-impl.version>4.0.5</com.sun.xml.jaxb-impl.version>
+        <jakarta.xml.bind-api.version>4.0.2</jakarta.xml.bind-api.version>
         <javax.annotation-api.version>2.0.1.Final</javax.annotation-api.version>
         <javax.javaee-api>8.0</javax.javaee-api>
         <javax.jws-api>1.1</javax.jws-api>
         <javax.validation-api.version>2.0.1.Final</javax.validation-api.version>
         <javax.xml.jaxb-api.version>2.1</javax.xml.jaxb-api.version>
         <org.apache.cxf.version>3.3.9</org.apache.cxf.version>
+        <org.apache.httpclient5.version>5.0</org.apache.httpclient5.version>
         <org.bouncycastle.bcpkix-jdk15on.version>1.64</org.bouncycastle.bcpkix-jdk15on.version>
         <org.codehaus-jaxb2-maven-plugin>2.5.0</org.codehaus-jaxb2-maven-plugin>
         <org.dbunit.version>2.6.0</org.dbunit.version>
@@ -29,7 +32,7 @@
         <org.junit.jupiter.version>5.6.3</org.junit.jupiter.version>
         <org.jvnet.maven-jaxb2-plugin.version>0.14.0</org.jvnet.maven-jaxb2-plugin.version>
         <org.slf4j-api.version>1.7.30</org.slf4j-api.version>
-        <spring.boot.version>2.3.7.RELEASE</spring.boot.version>
+        <spring.boot.version>2.5.15</spring.boot.version>
         <swagger.version>2.9.2</swagger.version>
         <vaadin.version>14.4.7</vaadin.version>
     </properties>
@@ -42,11 +45,6 @@
                 <version>${spring.boot.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${spring.boot.version}</version>
             </dependency>
             <!--swagger libs-->
             <dependency>
@@ -180,6 +178,18 @@
                 <artifactId>spring-property-configuration-validator</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <!--jaxb xml-->
+            <dependency>
+                <groupId>jakarta.xml.bind</groupId>
+                <artifactId>jakarta.xml.bind-api</artifactId>
+                <version>${jakarta.xml.bind-api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.sun.xml.bind</groupId>
+                <artifactId>jaxb-impl</artifactId>
+                <version>${com.sun.xml.jaxb-impl.version}</version>
+                <scope>runtime</scope>
+            </dependency>
             <!--other libs-->
             <dependency>
                 <groupId>org.junit</groupId>
@@ -215,6 +225,11 @@
                 <groupId>org.bouncycastle</groupId>
                 <artifactId>bcpkix-jdk15on</artifactId>
                 <version>${org.bouncycastle.bcpkix-jdk15on.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.httpcomponents.client5</groupId>
+                <artifactId>httpclient5</artifactId>
+                <version>${org.apache.httpclient5.version}</version>
             </dependency>
             <!--test libs -->
             <dependency>

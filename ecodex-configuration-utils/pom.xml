@@ -10,6 +10,17 @@
     <groupId>eu.ecodex.configuration</groupId>
     <artifactId>ecodex-configuration-utils</artifactId>
     <packaging>pom</packaging>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>eu.ecodex.utils</groupId>
+                <artifactId>ecodex-dependencies</artifactId>
+                <version>${project.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
     <modules>
         <module>pmode-utils</module>
     </modules>
