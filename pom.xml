@@ -105,6 +105,8 @@
         <org.codehaus.build-helper-maven-plugin.version>1.5</org.codehaus.build-helper-maven-plugin.version>
         <org.codehaus-jaxb2-maven-plugin>3.2.0</org.codehaus-jaxb2-maven-plugin>
         <org.codehaus.mojo-plugin>2.5.0</org.codehaus.mojo-plugin>
+        <!-- jacoco plugin -->
+        <jacoco.version>0.8.12</jacoco.version>
     </properties>
     <build>
         <pluginManagement>
@@ -188,6 +190,12 @@
                     <artifactId>cargo-maven2-plugin</artifactId>
                     <version>1.7.3</version>
                 </plugin>
+                <!--JaCoCo-->
+                <plugin>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>jacoco-maven-plugin</artifactId>
+                    <version>${jacoco.version}</version>
+                </plugin>
             </plugins>
         </pluginManagement>
         <plugins>
@@ -255,31 +263,31 @@
                     <doclint>all,-missing</doclint>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
     <reporting>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-project-info-reports-plugin</artifactId>
-                <reportSets>
-                    <reportSet>
-                        <reports>
-                            <report>index</report>
-                            <report>summary</report>
-                            <report>dependencies</report>
-                        </reports>
-                    </reportSet>
-                </reportSets>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <configuration>
-                    <links>
-                        <link>http://java.sun.com/javase/6/docs/api/</link>
-                    </links>
-                </configuration>
                 <reportSets>
                     <reportSet>
                         <id>aggregate</id>
