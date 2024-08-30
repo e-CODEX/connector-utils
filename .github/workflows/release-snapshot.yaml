@@ -4,10 +4,7 @@ on:
       - develop
 jobs:
   publish:
-    uses: eu-LISA/ecodex-workflows/.github/workflows/maven-snapshot-publish.yaml@main
+    uses: e-CODEX/workflows/.github/workflows/maven-snapshot-publish.yaml@main
     with:
       java-version: 21
       maven-repo-id: 'snapshots'
-    secrets:
-      MAVEN_NAME: ${{ secrets.MAVEN_NAME_SNAPSHOTS }}
-      MAVEN_SECRET: ${{ secrets.MAVEN_SECRET_SNAPSHOTS }}
