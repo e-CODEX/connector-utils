@@ -1,132 +1,119 @@
 package eu.ecodex.utils.monitor.gw.service;
 
-import eu.ecodex.utils.monitor.app.MonitorAppConfiguration;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import eu.ecodex.utils.monitor.gw.GatewayMonitorAutoConfiguration;
 import eu.ecodex.utils.monitor.gw.domain.AccessPoint;
 import eu.ecodex.utils.monitor.gw.dto.AccessPointStatusDTO;
-import org.apache.catalina.Server;
+import java.time.Duration;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import test.server.ServerStarter;
 
-import java.time.Duration;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
-
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(
-        webEnvironment = SpringBootTest.WebEnvironment.NONE,
-        classes = { GatewayMonitorAutoConfiguration.class }
+    webEnvironment = SpringBootTest.WebEnvironment.NONE,
+    classes = {GatewayMonitorAutoConfiguration.class}
 )
 @ActiveProfiles("test")
-public class GatewaysCheckerServiceITCase {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(GatewaysCheckerServiceITCase.class);
-
+class GatewaysCheckerServiceITCase {
+    private static final Logger LOGGER =
+        LoggerFactory.getLogger(GatewaysCheckerServiceITCase.class);
+    public static final String GATEWAY_STATUS_IS = "Gateway status is: [{}]";
     @Autowired
     GatewaysCheckerService gatewaysCheckerService;
 
     @Test
     void getGatewayStatus_serverCrtDoesNotMatchName() {
 
-        ConfigurableApplicationContext SERVER1 = ServerStarter.startServer1();
+        var server1 = ServerStarter.startServer1();
 
-        AccessPoint ap = new AccessPoint();
-        ap.setName("gw1");
-        ap.setEndpoint("https://localhost:" + ServerStarter.getServerPort(SERVER1) + "/");
+        var accessPoint = new AccessPoint();
+        accessPoint.setName("gw1");
+        accessPoint.setEndpoint("https://localhost:" + ServerStarter.getServerPort(server1) + "/");
 
-        AccessPointStatusDTO gatewayStatus = gatewaysCheckerService.getGatewayStatus(ap);
+        var gatewayStatus = gatewaysCheckerService.getGatewayStatus(accessPoint);
 
-        LOGGER.info("Gateway status is: [{}]", gatewayStatus);
+        LOGGER.info(GATEWAY_STATUS_IS, gatewayStatus);
 
         assertThat(gatewayStatus.getFailures()).hasSize(1);
     }
 
     @Test
     void getGatewayStatus2_illegalClientCrt() {
+        var server2 = ServerStarter.startServer2();
 
-        ConfigurableApplicationContext SERVER2 = ServerStarter.startServer2();
+        var accessPoint = new AccessPoint();
+        accessPoint.setName("gw2");
+        accessPoint.setEndpoint("https://localhost:" + ServerStarter.getServerPort(server2) + "/");
 
-        AccessPoint ap = new AccessPoint();
-        ap.setName("gw2");
-        ap.setEndpoint("https://localhost:" + ServerStarter.getServerPort(SERVER2) + "/");
+        var gatewayStatus = gatewaysCheckerService.getGatewayStatus(accessPoint);
 
-        AccessPointStatusDTO gatewayStatus = gatewaysCheckerService.getGatewayStatus(ap);
-
-        LOGGER.info("Gateway status is: [{}]", gatewayStatus);
+        LOGGER.info(GATEWAY_STATUS_IS, gatewayStatus);
 
         assertThat(gatewayStatus.getFailures()).hasSize(1);
     }
 
     @Test
     void getGatewayStatus3() {
+        var server3 = ServerStarter.startServer3();
 
-        ConfigurableApplicationContext SERVER3 = ServerStarter.startServer3();
+        var accessPoint = new AccessPoint();
+        accessPoint.setName("gw3");
+        accessPoint.setEndpoint("https://localhost:" + ServerStarter.getServerPort(server3) + "/");
 
-        AccessPoint ap = new AccessPoint();
-        ap.setName("gw3");
-        ap.setEndpoint("https://localhost:" + ServerStarter.getServerPort(SERVER3) + "/");
+        AccessPointStatusDTO gatewayStatus = gatewaysCheckerService.getGatewayStatus(accessPoint);
 
-        AccessPointStatusDTO gatewayStatus = gatewaysCheckerService.getGatewayStatus(ap);
+        LOGGER.info(GATEWAY_STATUS_IS, gatewayStatus);
 
-        LOGGER.info("Gateway status is: [{}]", gatewayStatus);
-
-        assertThat(gatewayStatus.getFailures()).hasSize(0);
+        assertThat(gatewayStatus.getFailures()).isEmpty();
     }
 
     @Test
     void getGatewayStatus_recheck() throws InterruptedException {
+        var server3 = ServerStarter.startServer3();
 
-        ConfigurableApplicationContext SERVER3 = ServerStarter.startServer3();
+        var accessPoint = new AccessPoint();
+        accessPoint.setName("gw3");
+        accessPoint.setEndpoint("https://localhost:" + ServerStarter.getServerPort(server3) + "/");
 
-        AccessPoint ap = new AccessPoint();
-        ap.setName("gw3");
-        ap.setEndpoint("https://localhost:" + ServerStarter.getServerPort(SERVER3) + "/");
-
-        AccessPointStatusDTO gatewayStatus = gatewaysCheckerService.getGatewayStatus(ap);
-        LOGGER.info("Gateway status is: [{}]", gatewayStatus);
-        assertThat(gatewayStatus.getFailures()).hasSize(0);
+        var gatewayStatus = gatewaysCheckerService.getGatewayStatus(accessPoint);
+        LOGGER.info(GATEWAY_STATUS_IS, gatewayStatus);
+        assertThat(gatewayStatus.getFailures()).isEmpty();
 
         LOGGER.info("sleep 8s");
         Thread.sleep(Duration.ofSeconds(8).toMillis());
 
-        AccessPointStatusDTO gatewayStatus2 = gatewaysCheckerService.getGatewayStatus(ap);
-        LOGGER.info("Gateway status is: [{}]", gatewayStatus2);
+        var gatewayStatus2 = gatewaysCheckerService.getGatewayStatus(accessPoint);
+        LOGGER.info(GATEWAY_STATUS_IS, gatewayStatus2);
         assertThat(gatewayStatus).isNotEqualTo(gatewayStatus2);
-
-
     }
 
     @Test
     void getGatewayStatus4_illegalServerCrt() throws InterruptedException {
+        var server4 = ServerStarter.startServer4();
 
-        ConfigurableApplicationContext SERVER4 = ServerStarter.startServer4();
+        var accessPoint = new AccessPoint();
+        accessPoint.setName("gw4");
+        accessPoint.setEndpoint("https://localhost:" + ServerStarter.getServerPort(server4) + "/");
 
-        AccessPoint ap = new AccessPoint();
-        ap.setName("gw4");
-        ap.setEndpoint("https://localhost:" + ServerStarter.getServerPort(SERVER4) + "/");
-
-        AccessPointStatusDTO gatewayStatus = gatewaysCheckerService.getGatewayStatus(ap);
-        AccessPointStatusDTO gatewayStatus1 = gatewaysCheckerService.getGatewayStatus(ap);
         Thread.sleep(Duration.ofSeconds(2).toMillis());
-        AccessPointStatusDTO gatewayStatus2 = gatewaysCheckerService.getGatewayStatus(ap);
 
-        LOGGER.info("Gateway status is: [{}]", gatewayStatus);
+        var gatewayStatus = gatewaysCheckerService.getGatewayStatus(accessPoint);
+        LOGGER.info(GATEWAY_STATUS_IS, gatewayStatus);
 
         assertThat(gatewayStatus.getFailures()).hasSize(1);
 
+        var gatewayStatus2 = gatewaysCheckerService.getGatewayStatus(accessPoint);
+
+        var gatewayStatus1 = gatewaysCheckerService.getGatewayStatus(accessPoint);
         assertThat(gatewayStatus).isSameAs(gatewayStatus1);
         assertThat(gatewayStatus).isSameAs(gatewayStatus2);
     }
-
-
-
 }

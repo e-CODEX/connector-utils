@@ -1,71 +1,115 @@
+/*
+ * Copyright 2024 European Union Agency for the Operational Management of Large-Scale IT Systems
+ * in the Area of Freedom, Security and Justice (eu-LISA)
+ *
+ * Licensed under the EUPL, Version 1.2 or – as soon they will be approved by the
+ * European Commission - subsequent versions of the EUPL (the "Licence");
+ * You may not use this work except in compliance with the Licence.
+ * You may obtain a copy at: https://joinup.ec.europa.eu/software/page/eupl
+ */
+
 package eu.ecodex.utils.monitor.keystores.service;
 
 import eu.domibus.connector.lib.spring.configuration.StoreConfigurationProperties;
 import eu.ecodex.utils.monitor.keystores.CertificateToStoreEntryInfoProcessor;
-import eu.ecodex.utils.monitor.keystores.ConditionalOnCertificatesCheckEnabled;
 import eu.ecodex.utils.monitor.keystores.config.CertificateConfigurationProperties;
 import eu.ecodex.utils.monitor.keystores.config.NamedKeyTrustStore;
 import eu.ecodex.utils.monitor.keystores.dto.StoreEntryInfo;
 import eu.ecodex.utils.monitor.keystores.dto.StoreInfo;
 import io.micrometer.core.instrument.util.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.actuate.endpoint.annotation.Selector;
-import org.springframework.context.annotation.Conditional;
-import org.springframework.stereotype.Component;
-
-import javax.validation.constraints.NotBlank;
 import java.beans.PropertyDescriptor;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
-import java.security.cert.Certificate;
 import java.security.cert.CertificateEncodingException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Enumeration;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
+import javax.validation.constraints.NotBlank;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.actuate.endpoint.annotation.Selector;
 
+/**
+ * Service to manage and retrieve information about certificate stores.
+ *
+ * <p>This service provides functionalities to:
+ * <ul>
+ *   <li>Retrieve all configured certificate stores.</li>
+ *   <li>Retrieve specific certificate store information by name.</li>
+ *   <li>Retrieve detailed entry information from a specific store and alias.</li>
+ * </ul>
+ */
 public class KeyService {
-
     private static final Logger LOGGER = LoggerFactory.getLogger(KeyService.class);
-
     @Autowired
     CertificateConfigurationProperties crtCheckConfig;
-
     @Autowired(required = false)
     List<CertificateToStoreEntryInfoProcessor> crtProcessorList;
 
+    /**
+     * Retrieves a map of all configured stores with their corresponding information.
+     *
+     * @return a map where each key is the name of a store and the value is the corresponding
+     *      `StoreInfo`
+     */
     public Map<String, StoreInfo> getStores() {
         return crtCheckConfig.getStores()
-                .stream()
-                .map(this::mapStore)
-                .filter(Objects::nonNull)
-                .collect(Collectors.toMap(s -> s.getName(), s -> s));
+                             .stream()
+                             .map(this::mapStore)
+                             .filter(Objects::nonNull)
+                             .collect(Collectors.toMap(s -> s.getName(), s -> s));
     }
 
-
+    /**
+     * Retrieves information about a specific store entry by its name.
+     *
+     * @param storeName the name of the store for which information is to be retrieved.
+     * @return the {@link StoreInfo} object containing information about the specified store.
+     */
     public StoreInfo getStoreEntryInfo(@Selector String storeName) {
         return crtCheckConfig.getStores()
-                .stream()
-                .filter(s -> storeName.equals(s.getName()))
-                .map(this::mapStore)
-                .filter(Objects::nonNull)
-                .findFirst()
-                .orElse(new StoreInfo());
+                             .stream()
+                             .filter(s -> storeName.equals(s.getName()))
+                             .map(this::mapStore)
+                             .filter(Objects::nonNull)
+                             .findFirst()
+                             .orElse(new StoreInfo());
     }
 
-
-    public StoreEntryInfo getStoreEntryInfo(String exposedMetrics, String storeName, String aliasName) {
-        Optional<NamedKeyTrustStore> foundKeyTrustStore = crtCheckConfig.getStores()
-                .stream()
-                .filter(s -> storeName.equals(s.getName()))
-                .findFirst();
+    /**
+     * Retrieves information about a specific store entry identified by its alias name and store
+     * name.
+     *
+     * @param exposedMetrics a string specifying which metrics to expose; if null, defaults will be
+     *                       used.
+     * @param storeName      the name of the store from which the entry information is being
+     *                       retrieved.
+     * @param aliasName      the alias name of the specific entry within the store.
+     * @return the {@link StoreEntryInfo} object containing information about the specified store
+     *      entry.
+     */
+    public StoreEntryInfo getStoreEntryInfo(
+        String exposedMetrics, String storeName, String aliasName) {
+        Optional<NamedKeyTrustStore> foundKeyTrustStore = crtCheckConfig
+            .getStores()
+            .stream()
+            .filter(
+                s -> storeName.equals(
+                    s.getName()))
+            .findFirst();
 
         if (foundKeyTrustStore.isPresent()) {
-            NamedKeyTrustStore namedKeyTrustStore = foundKeyTrustStore.get();
-            KeyStore keyStore = namedKeyTrustStore.loadKeyStore();
+            var namedKeyTrustStore = foundKeyTrustStore.get();
+            var keyStore = namedKeyTrustStore.loadKeyStore();
             if (exposedMetrics == null) {
                 exposedMetrics = namedKeyTrustStore.getEntryMetricExposed();
             }
@@ -75,12 +119,12 @@ public class KeyService {
     }
 
     private StoreInfo mapStore(NamedKeyTrustStore namedKeyTrustStore) {
-        String exposed = namedKeyTrustStore.getMetricExposed();
+        var exposed = namedKeyTrustStore.getMetricExposed();
         if (!StringUtils.isEmpty(exposed)) {
-            StoreInfo storeInfo = new StoreInfo();
-            boolean storeReadable = false;
+            var storeInfo = new StoreInfo();
+            var storeReadable = false;
             storeInfo.setName(namedKeyTrustStore.getName());
-            List<String> split = Arrays.asList(exposed.split(","));
+            var split = Arrays.asList(exposed.split(","));
 
             if (listContainsOrWildcard(split, "configuredLocation")) {
                 storeInfo.setConfiguredLocation(namedKeyTrustStore.getPath().getDescription());
@@ -88,12 +132,16 @@ public class KeyService {
 
             if (listContainsOrWildcard(split, "location")) {
 
-                Path path = null;
+                Path path;
                 try {
                     path = namedKeyTrustStore.getPath().getFile().toPath().toAbsolutePath();
                     storeInfo.setLocation(path.toString());
                 } catch (IOException e) {
-                    LOGGER.warn(String.format("IOException occured while getting path of store [%s]", namedKeyTrustStore), e);
+                    LOGGER.warn(
+                        String.format(
+                            "IOException occured while getting path of store [%s]",
+                            namedKeyTrustStore
+                        ), e);
                     storeInfo.setLocation(namedKeyTrustStore.getPathUrlAsString());
                 }
             }
@@ -105,8 +153,7 @@ public class KeyService {
                 LOGGER.warn(String.format("Store [%s] not readable due", namedKeyTrustStore), ve);
             }
 
-
-            if (listContainsOrWildcard(split,"access")) {
+            if (listContainsOrWildcard(split, "access")) {
                 storeInfo.setReadable(storeReadable);
                 storeInfo.setWriteable(false);
 
@@ -114,7 +161,8 @@ public class KeyService {
                     namedKeyTrustStore.validatePathWriteable();
                     storeInfo.setWriteable(true);
                 } catch (StoreConfigurationProperties.ValidationException ve) {
-                    LOGGER.debug(String.format("Store [%s] not writeable due", namedKeyTrustStore), ve);
+                    LOGGER.debug(
+                        String.format("Store [%s] not writeable due", namedKeyTrustStore), ve);
                 }
             }
 
@@ -126,9 +174,8 @@ public class KeyService {
                 storeInfo.setStoreEntries(mapStoreEntries(namedKeyTrustStore));
             }
 
-            //expose entries...
+            // expose entries...
             return storeInfo;
-
         }
         return null;
     }
@@ -145,30 +192,35 @@ public class KeyService {
         }
     }
 
-    private List<StoreEntryInfo> processKeyStoreAliases(@NotBlank NamedKeyTrustStore namedKeyTrustStore) throws KeyStoreException {
+    private List<StoreEntryInfo> processKeyStoreAliases(
+        @NotBlank NamedKeyTrustStore namedKeyTrustStore) throws KeyStoreException {
         List<StoreEntryInfo> entries = new ArrayList<>();
-        KeyStore keyStore = namedKeyTrustStore.loadKeyStore();
+        var keyStore = namedKeyTrustStore.loadKeyStore();
         Enumeration<String> aliases = keyStore.aliases();
-        List<String> exposedAliases = Arrays.asList(namedKeyTrustStore.getEntryExposed().split(","));
-
+        List<String> exposedAliases =
+            Arrays.asList(namedKeyTrustStore.getEntryExposed().split(","));
 
         while (aliases.hasMoreElements()) {
             String alias = aliases.nextElement();
 
             if (exposedAliases.contains("*") || exposedAliases.contains(alias)) {
-                StoreEntryInfo entry = processKeyStoreAlias(alias, namedKeyTrustStore.getEntryMetricExposed(), keyStore);
+                StoreEntryInfo entry =
+                    processKeyStoreAlias(alias, namedKeyTrustStore.getEntryMetricExposed(),
+                                         keyStore
+                    );
                 entries.add(entry);
             }
         }
         return entries;
     }
 
-    private StoreEntryInfo processKeyStoreAlias(String alias, String entryMetricExposed, KeyStore keyStore) {
-        StoreEntryInfo entry = new StoreEntryInfo();
+    private StoreEntryInfo processKeyStoreAlias(
+        String alias, String entryMetricExposed, KeyStore keyStore) {
+        var entry = new StoreEntryInfo();
         entry.setAliasName(alias);
         try {
 
-            Certificate certificate = keyStore.getCertificate(alias);
+            var certificate = keyStore.getCertificate(alias);
 
             if (certificate == null) {
                 entry.setPresent(false);
@@ -177,11 +229,12 @@ public class KeyService {
             entry.setPresent(true);
 
             entry.setCertificateType(certificate.getType());
-            Optional<CertificateToStoreEntryInfoProcessor> crtProcessor = crtProcessorList.stream()
-                    .filter(p -> p.canProcess(certificate.getType()))
-                    .findAny();
-
-
+            Optional<CertificateToStoreEntryInfoProcessor> crtProcessor = crtProcessorList
+                .stream()
+                .filter(
+                    p -> p.canProcess(
+                        certificate.getType()))
+                .findAny();
 
             if (crtProcessor.isPresent()) {
                 StoreEntryInfo source;
@@ -192,9 +245,11 @@ public class KeyService {
                 filterMetricExposed(entryMetricExposed, source, entry);
                 return entry;
             }
-
         } catch (KeyStoreException | CertificateEncodingException e) {
-            LOGGER.warn(String.format("Failed to retrieve information from alias [%s] from keyStore [%s]", alias, keyStore), e);
+            LOGGER.warn(
+                String.format("Failed to retrieve information from alias [%s] from keyStore [%s]",
+                              alias, keyStore
+                ), e);
         }
         return entry;
     }
@@ -203,19 +258,20 @@ public class KeyService {
         List<String> exposed = Arrays.asList(entryMetricExposed.split(","));
         List<String> ignoredCopyProperties = new ArrayList<>();
 
-        PropertyDescriptor[] propertyDescriptors = BeanUtils.getPropertyDescriptors(source.getClass());
-        for (int i = 0; i < propertyDescriptors.length; i++) {
-            PropertyDescriptor prop = propertyDescriptors[i];
-            if (! (exposed.contains("*") || exposed.contains(prop.getName()))) {
+        PropertyDescriptor[] propertyDescriptors =
+            BeanUtils.getPropertyDescriptors(source.getClass());
+        for (PropertyDescriptor prop : propertyDescriptors) {
+            if (!(exposed.contains("*") || exposed.contains(prop.getName()))) {
                 ignoredCopyProperties.add(prop.getName());
             }
         }
-        BeanUtils.copyProperties(source, target, ignoredCopyProperties.toArray(new String[ignoredCopyProperties.size()]));
+        BeanUtils.copyProperties(
+            source,
+            target,
+            ignoredCopyProperties.toArray(new String[ignoredCopyProperties.size()]));
     }
 
     private boolean listContainsOrWildcard(List<String> list, String contains) {
         return list.contains("*") || list.contains(contains);
     }
-
-
 }

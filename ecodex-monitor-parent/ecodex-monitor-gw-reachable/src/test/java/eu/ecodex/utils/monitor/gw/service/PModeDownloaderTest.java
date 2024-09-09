@@ -1,16 +1,15 @@
 package eu.ecodex.utils.monitor.gw.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import eu.ecodex.configuration.pmode.Configuration;
 import eu.ecodex.utils.monitor.gw.config.GatewayRestInterfaceConfiguration;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 @Disabled("tests needs external resources")
-public class PModeDownloaderTest {
-
+class PModeDownloaderTest {
     PModeDownloader pModeDownloader;
 
     @BeforeEach
@@ -28,9 +27,4 @@ public class PModeDownloaderTest {
         Configuration configuration = pModeDownloader.downloadPModes();
         assertThat(configuration).isNotNull();
     }
-
-//    @Test
-//    void authenticate() {
-//    }
-
 }

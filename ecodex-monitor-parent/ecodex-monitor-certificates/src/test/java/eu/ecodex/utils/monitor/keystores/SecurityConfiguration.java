@@ -1,6 +1,5 @@
 package eu.ecodex.utils.monitor.keystores;
 
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -9,15 +8,11 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.antMatcher("/actuator/**")
-                .authorizeRequests((s) -> {
-                    s.anyRequest().hasAnyRole("MONITOR");
-                })
-                .httpBasic().realmName("actuator")
-                ;
+            .authorizeRequests(s -> s.anyRequest().hasAnyRole("MONITOR"))
+            .httpBasic().realmName("actuator")
+        ;
     }
-
 }

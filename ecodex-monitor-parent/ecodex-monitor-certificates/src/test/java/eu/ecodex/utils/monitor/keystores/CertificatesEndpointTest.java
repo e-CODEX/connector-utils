@@ -1,5 +1,6 @@
 package eu.ecodex.utils.monitor.keystores;
 
+import static org.assertj.core.api.Assertions.assertThat;
 
 import eu.ecodex.utils.monitor.keystores.dto.StoreEntryInfo;
 import eu.ecodex.utils.monitor.keystores.dto.StoreInfo;
@@ -15,51 +16,44 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.web.client.RestTemplate;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles({"test", "dev"})
 class CertificatesEndpointTest {
-
     public static final String USERNAME = "admin";
     public static final String PASSWORD = "admin";
-
     @LocalServerPort
     int localServerPort;
     private RestTemplate restTemplate;
 
-
     @BeforeEach
     public void initRestTemplate() {
         RestTemplateBuilder restTemplateBuilder = new RestTemplateBuilder();
-        RestTemplate build = restTemplateBuilder
-                .basicAuthentication(USERNAME, PASSWORD)
-                .build();
 
-        this.restTemplate = build;
+        this.restTemplate = restTemplateBuilder
+            .basicAuthentication(USERNAME, PASSWORD)
+            .build();
     }
 
     @Test
     void testReadStores() {
-        HttpHeaders headers = new HttpHeaders();
-        HttpEntity <String> entity = new HttpEntity<String>(headers);
+        var headers = new HttpHeaders();
+        var entity = new HttpEntity<String>(headers);
 
-        String url = "http://localhost:" + localServerPort + "/actuator/certificates";
-        ResponseEntity<String> exchange = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
+        var url = "http://localhost:" + localServerPort + "/actuator/certificates";
+        var exchange = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
 
         assertThat(exchange.getBody()).isNotNull();
-
     }
 
     @Test
     void testReadStoreInfo() {
         HttpHeaders headers = new HttpHeaders();
-        HttpEntity <String> entity = new HttpEntity<String>(headers);
+        HttpEntity<String> entity = new HttpEntity<>(headers);
 
-        String url = "http://localhost:" + localServerPort + "/actuator/certificates/gwstore";
-        ResponseEntity<StoreInfo> exchange = restTemplate.exchange(url, HttpMethod.GET, entity, StoreInfo.class);
+        var url = "http://localhost:" + localServerPort + "/actuator/certificates/gwstore";
+        var exchange = restTemplate.exchange(url, HttpMethod.GET, entity, StoreInfo.class);
 
-        StoreInfo info = exchange.getBody();
+        var info = exchange.getBody();
         assertThat(info).isNotNull();
         assertThat(info.getName()).isEqualTo("gwstore");
         assertThat(info.getReadable()).isTrue();
@@ -67,13 +61,14 @@ class CertificatesEndpointTest {
 
     @Test
     void testCertInfo() {
-        HttpHeaders headers = new HttpHeaders();
-        HttpEntity <String> entity = new HttpEntity<String>(headers);
+        var headers = new HttpHeaders();
+        var entity = new HttpEntity<String>(headers);
 
-        String url = "http://localhost:" + localServerPort + "/actuator/certificates/gwstore/gw2";
-        ResponseEntity<StoreEntryInfo> exchange = restTemplate.exchange(url, HttpMethod.GET, entity, StoreEntryInfo.class);
+        var url = "http://localhost:" + localServerPort + "/actuator/certificates/gwstore/gw2";
+        ResponseEntity<StoreEntryInfo> exchange =
+            restTemplate.exchange(url, HttpMethod.GET, entity, StoreEntryInfo.class);
 
-        StoreEntryInfo info = exchange.getBody();
+        var info = exchange.getBody();
         assertThat(info).isNotNull();
         assertThat(info.getAliasName()).isEqualTo("gw2");
         assertThat(info.getCertificateType()).isEqualTo("X.509");
@@ -81,16 +76,15 @@ class CertificatesEndpointTest {
 
     @Test
     void testCertInfo_notExistent() {
-        HttpHeaders headers = new HttpHeaders();
-        HttpEntity <String> entity = new HttpEntity<String>(headers);
+        var headers = new HttpHeaders();
+        var entity = new HttpEntity<String>(headers);
 
-        String url = "http://localhost:" + localServerPort + "/actuator/certificates/gwstore/gw123123";
-        ResponseEntity<StoreEntryInfo> exchange = restTemplate.exchange(url, HttpMethod.GET, entity, StoreEntryInfo.class);
+        var url = "http://localhost:" + localServerPort + "/actuator/certificates/gwstore/gw123123";
+        var exchange = restTemplate.exchange(url, HttpMethod.GET, entity, StoreEntryInfo.class);
 
-        StoreEntryInfo info = exchange.getBody();
+        var info = exchange.getBody();
         assertThat(info).isNotNull();
         assertThat(info.getAliasName()).isEqualTo("gw123123");
         assertThat(info.getPresent()).isFalse();
-
     }
 }
