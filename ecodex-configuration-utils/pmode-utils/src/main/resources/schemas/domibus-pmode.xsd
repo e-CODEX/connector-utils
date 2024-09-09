@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://domibus.eu/configuration"
-           targetNamespace="http://domibus.eu/configuration">
+        targetNamespace="http://domibus.eu/configuration">
     <xs:element name="configuration">
         <xs:complexType>
             <xs:all>
@@ -13,13 +12,13 @@
                                 <xs:complexType>
                                     <xs:attribute name="name" type="max255-non-empty-string" use="required"/>
                                     <xs:attribute name="retention_downloaded" type="xs:integer"
-                                                  use="required"/>
+                                            use="required"/>
                                     <xs:attribute name="retention_undownloaded" type="xs:integer"
-                                                  use="required"/>
+                                            use="required"/>
                                     <xs:attribute name="default" type="xs:boolean" use="required"/>
                                     <xs:attribute name="enabled" type="xs:boolean" use="required"/>
                                     <xs:attribute name="qualifiedName" type="max255-non-empty-string"
-                                                  use="required"/>
+                                            use="required"/>
                                 </xs:complexType>
                             </xs:element>
                         </xs:sequence>
@@ -42,9 +41,9 @@
                                         <xs:element maxOccurs="unbounded" name="role">
                                             <xs:complexType>
                                                 <xs:attribute name="name" use="required"
-                                                              type="max255-non-empty-string"/>
+                                                        type="max255-non-empty-string"/>
                                                 <xs:attribute name="value" use="required"
-                                                              type="max255-non-empty-string"/>
+                                                        type="max255-non-empty-string"/>
                                             </xs:complexType>
                                         </xs:element>
                                     </xs:sequence>
@@ -61,12 +60,12 @@
                                             <xs:complexType>
                                                 <xs:sequence>
                                                     <xs:element maxOccurs="unbounded"
-                                                                name="partyIdType">
+                                                            name="partyIdType">
                                                         <xs:complexType>
                                                             <xs:attribute id="partyIdType" name="name"
-                                                                          type="max255-non-empty-string" use="required"/>
+                                                                    type="max255-non-empty-string" use="required"/>
                                                             <xs:attribute name="value" type="xs:anyURI"
-                                                                          use="required"/>
+                                                                    use="required"/>
                                                         </xs:complexType>
                                                     </xs:element>
                                                 </xs:sequence>
@@ -84,21 +83,22 @@
                                             <xs:complexType>
                                                 <xs:sequence>
                                                     <xs:element name="identifier"
-                                                                maxOccurs="unbounded">
+                                                            maxOccurs="unbounded">
                                                         <xs:complexType>
                                                             <xs:attribute name="partyId" type="max255-non-empty-string"
-                                                                          use="required"/>
-                                                            <xs:attribute name="partyIdType" type="max255-non-empty-string"
-                                                                          use="optional"/>
+                                                                    use="required"/>
+                                                            <xs:attribute name="partyIdType"
+                                                                    type="max255-non-empty-string"
+                                                                    use="optional"/>
                                                         </xs:complexType>
                                                     </xs:element>
                                                 </xs:sequence>
                                                 <xs:attribute name="name" use="required"
-                                                              type="xs:string"/>
+                                                        type="xs:string"/>
                                                 <xs:attribute name="userName" type="max255-non-empty-string"/>
                                                 <xs:attribute name="password" type="max255-non-empty-string"/>
                                                 <xs:attribute name="endpoint" type="xs:anyURI"
-                                                              use="required"/>
+                                                        use="required"/>
                                                 <!-- NOT SUPPORTED YET -->
                                                 <xs:attribute
                                                         name="allowChunking"
@@ -117,22 +117,22 @@
                                 <xs:complexType>
                                     <xs:sequence>
                                         <xs:element form="unqualified" maxOccurs="unbounded"
-                                                    name="mep">
+                                                name="mep">
                                             <xs:complexType>
                                                 <xs:attribute name="name" type="max255-non-empty-string"
-                                                              use="required"/>
+                                                        use="required"/>
                                                 <xs:attribute name="value" type="xs:anyURI"
-                                                              use="required"/>
+                                                        use="required"/>
                                                 <xs:attribute default="1" name="legs"
-                                                              type="xs:integer"/>
+                                                        type="xs:integer"/>
                                             </xs:complexType>
                                         </xs:element>
                                         <xs:element maxOccurs="unbounded" name="binding">
                                             <xs:complexType>
                                                 <xs:attribute name="name" type="max255-non-empty-string"
-                                                              use="required"/>
+                                                        use="required"/>
                                                 <xs:attribute name="value" type="xs:anyURI"
-                                                              use="required"/>
+                                                        use="required"/>
                                             </xs:complexType>
                                         </xs:element>
                                     </xs:sequence>
@@ -144,28 +144,28 @@
                                         <xs:element maxOccurs="unbounded" name="property">
                                             <xs:complexType>
                                                 <xs:attribute name="name" use="required"
-                                                              type="max255-non-empty-string"/>
+                                                        type="max255-non-empty-string"/>
                                                 <xs:attribute name="key" type="max255-non-empty-string"
-                                                              use="required"/>
+                                                        use="required"/>
                                                 <xs:attribute form="unqualified" name="datatype"
-                                                              use="required" type="max255-non-empty-string"/>
+                                                        use="required" type="max255-non-empty-string"/>
                                                 <xs:attribute name="required" type="xs:boolean"
-                                                              use="required"/>
+                                                        use="required"/>
                                             </xs:complexType>
                                         </xs:element>
                                         <xs:element maxOccurs="unbounded" name="propertySet">
                                             <xs:complexType>
                                                 <xs:sequence>
                                                     <xs:element maxOccurs="unbounded"
-                                                                name="propertyRef">
+                                                            name="propertyRef">
                                                         <xs:complexType>
                                                             <xs:attribute name="property" type="max255-non-empty-string"
-                                                                          use="required"/>
+                                                                    use="required"/>
                                                         </xs:complexType>
                                                     </xs:element>
                                                 </xs:sequence>
                                                 <xs:attribute name="name" type="max255-non-empty-string"
-                                                              use="required"/>
+                                                        use="required"/>
                                             </xs:complexType>
                                         </xs:element>
                                     </xs:sequence>
@@ -175,34 +175,36 @@
                                 <xs:complexType>
                                     <xs:sequence>
                                         <xs:element name="payload"
-                                                    maxOccurs="unbounded"
-                                                    minOccurs="0">
+                                                maxOccurs="unbounded"
+                                                minOccurs="0">
                                             <xs:complexType>
                                                 <xs:attribute name="name" use="required"
-                                                              type="max255-non-empty-string"/>
+                                                        type="max255-non-empty-string"/>
                                                 <xs:attribute name="cid" type="xs:string"
-                                                              use="required"/>
+                                                        use="required"/>
                                                 <xs:attribute name="mimeType" type="max255-non-empty-string"/>
                                                 <xs:attribute name="inBody" type="xs:string"/>
                                                 <xs:attribute name="schemaFile" form="unqualified"
-                                                              type="xs:anyURI"/>
+                                                        type="xs:anyURI"/>
                                                 <xs:attribute name="maxSize" type="xs:integer"/>
                                                 <xs:attribute name="required" type="xs:boolean"
-                                                              use="required"/>
+                                                        use="required"/>
                                             </xs:complexType>
                                         </xs:element>
                                         <xs:element name="payloadProfile"
-                                                    maxOccurs="unbounded"
-                                                    minOccurs="0">
+                                                maxOccurs="unbounded"
+                                                minOccurs="0">
                                             <xs:complexType>
                                                 <xs:sequence>
                                                     <xs:element maxOccurs="unbounded" name="attachment">
                                                         <xs:complexType>
-                                                            <xs:attribute name="name" type="max255-non-empty-string" use="required"/>
+                                                            <xs:attribute name="name" type="max255-non-empty-string"
+                                                                    use="required"/>
                                                         </xs:complexType>
                                                     </xs:element>
                                                 </xs:sequence>
-                                                <xs:attribute name="name" type="max255-non-empty-string" use="required"/>
+                                                <xs:attribute name="name" type="max255-non-empty-string"
+                                                        use="required"/>
                                                 <xs:attribute name="maxSize" type="xs:integer" use="required"/>
                                             </xs:complexType>
                                             <xs:unique name="uniqueAttachment">
@@ -217,14 +219,14 @@
                                 <xs:complexType>
                                     <xs:sequence>
                                         <xs:element name="security"
-                                                    maxOccurs="unbounded">
+                                                maxOccurs="unbounded">
                                             <xs:complexType>
                                                 <xs:attribute name="name"
-                                                              type="max255-non-empty-string"
-                                                              use="required"/>
+                                                        type="max255-non-empty-string"
+                                                        use="required"/>
                                                 <xs:attribute name="policy"
-                                                              type="max255-non-empty-string"
-                                                              use="required"/>
+                                                        type="max255-non-empty-string"
+                                                        use="required"/>
                                                 <xs:attribute
                                                         name="signatureMethod"
                                                         use="required"
@@ -240,15 +242,15 @@
                                         <xs:element name="errorHandling" maxOccurs="unbounded">
                                             <xs:complexType>
                                                 <xs:attribute name="name" type="max255-non-empty-string"
-                                                              use="required"/>
+                                                        use="required"/>
                                                 <xs:attribute name="errorAsResponse"
-                                                              type="xs:boolean" use="required"/>
+                                                        type="xs:boolean" use="required"/>
                                                 <xs:attribute name="businessErrorNotifyProducer"
-                                                              use="required" type="xs:boolean"/>
+                                                        use="required" type="xs:boolean"/>
                                                 <xs:attribute name="businessErrorNotifyConsumer"
-                                                              use="required" type="xs:boolean"/>
+                                                        use="required" type="xs:boolean"/>
                                                 <xs:attribute name="deliveryFailureNotifyProducer"
-                                                              use="required" type="xs:boolean"/>
+                                                        use="required" type="xs:boolean"/>
                                             </xs:complexType>
                                         </xs:element>
                                     </xs:sequence>
@@ -260,12 +262,12 @@
                                         <xs:element maxOccurs="unbounded" name="agreement">
                                             <xs:complexType>
                                                 <xs:attribute name="name" use="required"
-                                                              type="max255-non-empty-string"/>
+                                                        type="max255-non-empty-string"/>
                                                 <xs:attribute name="value" use="required"
-                                                              type="max255-string"/>
+                                                        type="max255-string"/>
                                                 <xs:attribute name="type"
-                                                              use="required"
-                                                              type="max255-string"/>
+                                                        use="required"
+                                                        type="max255-string"/>
                                             </xs:complexType>
                                         </xs:element>
                                     </xs:sequence>
@@ -277,11 +279,11 @@
                                         <xs:element maxOccurs="unbounded" name="service">
                                             <xs:complexType>
                                                 <xs:attribute name="name" use="required"
-                                                              type="max255-non-empty-string"/>
+                                                        type="max255-non-empty-string"/>
                                                 <xs:attribute name="value" use="required"
-                                                              type="max255-non-empty-string"/>
+                                                        type="max255-non-empty-string"/>
                                                 <xs:attribute name="type" type="max255-non-empty-string"
-                                                              use="optional"/>
+                                                        use="optional"/>
                                             </xs:complexType>
                                         </xs:element>
                                     </xs:sequence>
@@ -293,9 +295,9 @@
                                         <xs:element maxOccurs="unbounded" name="action">
                                             <xs:complexType>
                                                 <xs:attribute name="name" use="required"
-                                                              type="max255-non-empty-string"/>
+                                                        type="max255-non-empty-string"/>
                                                 <xs:attribute name="value" use="required"
-                                                              type="max255-non-empty-string"/>
+                                                        type="max255-non-empty-string"/>
                                             </xs:complexType>
                                         </xs:element>
                                     </xs:sequence>
@@ -307,20 +309,20 @@
                                         <xs:element maxOccurs="unbounded" name="receptionAwareness">
                                             <xs:complexType>
                                                 <xs:attribute name="name" type="max255-non-empty-string"
-                                                              use="required"/>
+                                                        use="required"/>
                                                 <xs:attribute name="retry" type="max255-non-empty-string"/>
                                                 <xs:attribute name="duplicateDetection"
-                                                              type="xs:string"/>
+                                                        type="xs:string"/>
                                             </xs:complexType>
                                         </xs:element>
                                         <xs:element maxOccurs="unbounded" name="reliability">
                                             <xs:complexType>
                                                 <xs:attribute name="name" type="max255-non-empty-string"
-                                                              use="required"/>
+                                                        use="required"/>
                                                 <xs:attribute name="replyPattern" type="max255-non-empty-string"
-                                                              use="required"/>
+                                                        use="required"/>
                                                 <xs:attribute name="nonRepudiation" type="max255-non-empty-string"
-                                                              use="required"/>
+                                                        use="required"/>
                                             </xs:complexType>
                                         </xs:element>
                                     </xs:sequence>
@@ -332,13 +334,15 @@
                                         <xs:element maxOccurs="unbounded" name="splitting">
                                             <xs:complexType>
                                                 <!-- The name of the splitting configuration -->
-                                                <xs:attribute name="name" type="max255-non-empty-string" use="required"/>
+                                                <xs:attribute name="name" type="max255-non-empty-string"
+                                                        use="required"/>
                                                 <!-- The maximum size of the fragments (in MB) -->
                                                 <xs:attribute name="fragmentSize" type="xs:integer" use="required"/>
                                                 <!-- If true, indicates that the message must be compressed before splitting -->
                                                 <xs:attribute name="compression" type="xs:string" use="required"/>
                                                 <!-- Indicates which compression algorithm to use. Fixed value “br” indicating the use of Brotli compression. -->
-                                                <xs:attribute name="compressionAlgorithm" type="max255-non-empty-string" use="optional"/>
+                                                <xs:attribute name="compressionAlgorithm" type="max255-non-empty-string"
+                                                        use="optional"/>
                                                 <!-- Specifies the maximum time to expect and process additional fragments after the first fragment is received (in hours) -->
                                                 <xs:attribute name="joinInterval" type="xs:integer" use="required"/>
                                             </xs:complexType>
@@ -352,28 +356,29 @@
                                         <xs:element maxOccurs="unbounded" name="legConfiguration">
                                             <xs:complexType>
                                                 <xs:attribute name="name" type="max255-non-empty-string"
-                                                              use="required"/>
+                                                        use="required"/>
                                                 <xs:attribute name="service" use="required"
-                                                              type="max255-non-empty-string"/>
+                                                        type="max255-non-empty-string"/>
                                                 <xs:attribute name="action" use="required"
-                                                              type="max255-non-empty-string"/>
+                                                        type="max255-non-empty-string"/>
                                                 <xs:attribute name="security" type="max255-non-empty-string"
-                                                              use="required"/>
+                                                        use="required"/>
                                                 <xs:attribute name="defaultMpc" type="max255-non-empty-string"
-                                                              use="required"/>
+                                                        use="required"/>
                                                 <xs:attribute name="receptionAwareness"
-                                                              type="max255-non-empty-string" use="required"/>
+                                                        type="max255-non-empty-string" use="required"/>
                                                 <xs:attribute name="reliability" type="max255-non-empty-string"
-                                                              use="required"/>
+                                                        use="required"/>
                                                 <xs:attribute name="propertySet" type="max255-non-empty-string"/>
                                                 <xs:attribute name="payloadProfile" type="max255-non-empty-string"/>
                                                 <xs:attribute name="errorHandling" type="max255-non-empty-string"
-                                                              use="required"/>
+                                                        use="required"/>
                                                 <xs:attribute
                                                         name="compressPayloads"
                                                         type="xs:string"
                                                         use="required"/>
-                                                <xs:attribute name="splitting" type="max255-non-empty-string" use="optional"/>
+                                                <xs:attribute name="splitting" type="max255-non-empty-string"
+                                                        use="optional"/>
                                             </xs:complexType>
                                         </xs:element>
                                     </xs:sequence>
@@ -391,7 +396,7 @@
                                                             minOccurs="1">
                                                         <xs:complexType>
                                                             <xs:attribute name="name" type="max255-non-empty-string"
-                                                                          use="required"/>
+                                                                    use="required"/>
                                                         </xs:complexType>
                                                     </xs:element>
                                                 </xs:sequence>
@@ -406,7 +411,7 @@
                                                             minOccurs="1">
                                                         <xs:complexType>
                                                             <xs:attribute name="name" type="max255-non-empty-string"
-                                                                          use="required"/>
+                                                                    use="required"/>
                                                         </xs:complexType>
                                                     </xs:element>
                                                 </xs:sequence>
@@ -418,7 +423,7 @@
                                                     <xs:element maxOccurs="unbounded" name="leg">
                                                         <xs:complexType>
                                                             <xs:attribute name="name" type="max255-non-empty-string"
-                                                                          use="required"/>
+                                                                    use="required"/>
                                                         </xs:complexType>
                                                     </xs:element>
                                                 </xs:sequence>
@@ -427,12 +432,12 @@
                                     </xs:sequence>
                                     <xs:attribute name="name" use="required" type="max255-non-empty-string"/>
                                     <xs:attribute name="responderRole" use="required"
-                                                  type="xs:string"/>
+                                            type="xs:string"/>
                                     <xs:attribute name="agreement" type="xs:string"/>
                                     <xs:attribute name="binding" type="xs:string" use="required"/>
                                     <xs:attribute name="mep" type="xs:string" use="required"/>
                                     <xs:attribute name="initiatorRole" use="required"
-                                                  type="xs:string"/>
+                                            type="xs:string"/>
                                 </xs:complexType>
                             </xs:element>
                         </xs:sequence>
