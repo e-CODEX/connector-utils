@@ -230,4 +230,7 @@ gradle-app.setting
 # Java heap dump
 *.hprof
 
+# Active MQ
+ecodex-monitor-parent/ecodex-monitor-activemq/activemq-data/
+
 # End of https://www.toptal.com/developers/gitignore/api/jetbrains+all,jetbrains+iml,java,maven,gradle,visualstudiocode
