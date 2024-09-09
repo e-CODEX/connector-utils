@@ -16,7 +16,6 @@
         <RandomAccessFile  name="File" fileName="target/testlogs/out.log">
             <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level - %marker - %logger{36} - messageid: [%mdc{messageid}] - %msg%n" />
         </RandomAccessFile >
-
     </Appenders>
     <Loggers>
         <Root level="info">
