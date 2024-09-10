@@ -6,16 +6,18 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
 import org.springframework.stereotype.Component;
 
+/**
+ * Configuration properties for the application, with a prefix "com.example.dc".
+ *
+ * <p>This class provides properties for the application configuration, including a nested
+ * configuration for additional settings via ExamplePropertiesConfig.
+ */
+@Data
 @Component
 @ConfigurationProperties(prefix = "com.example.dc")
-@Data
 public class Prop {
-
     private String abc;
-
     private String dgf;
-
     @NestedConfigurationProperty
     private ExamplePropertiesConfig examplePropertiesConfig = new ExamplePropertiesConfig();
-
 }

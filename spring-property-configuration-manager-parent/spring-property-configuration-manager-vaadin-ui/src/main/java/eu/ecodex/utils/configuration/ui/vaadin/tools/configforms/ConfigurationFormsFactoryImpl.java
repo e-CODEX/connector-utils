@@ -1,3 +1,13 @@
+/*
+ * Copyright 2024 European Union Agency for the Operational Management of Large-Scale IT Systems
+ * in the Area of Freedom, Security and Justice (eu-LISA)
+ *
+ * Licensed under the EUPL, Version 1.2 or – as soon they will be approved by the
+ * European Commission - subsequent versions of the EUPL (the "Licence");
+ * You may not use this work except in compliance with the Licence.
+ * You may obtain a copy at: https://joinup.ec.europa.eu/software/page/eupl
+ */
+
 package eu.ecodex.utils.configuration.ui.vaadin.tools.configforms;
 
 import com.vaadin.flow.component.AbstractField;
@@ -9,13 +19,21 @@ import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
-import com.vaadin.flow.data.binder.*;
+import com.vaadin.flow.data.binder.Binder;
+import com.vaadin.flow.data.binder.ValidationResult;
 import com.vaadin.flow.shared.Registration;
 import eu.ecodex.utils.configuration.domain.ConfigurationProperty;
 import eu.ecodex.utils.configuration.service.ConfigurationPropertyCollector;
 import eu.ecodex.utils.configuration.ui.vaadin.tools.ConfigurationFieldFactory;
 import eu.ecodex.utils.configuration.ui.vaadin.tools.ConfigurationFormsFactory;
 import eu.ecodex.utils.configuration.ui.vaadin.tools.UiConfigurationConversationService;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jsoup.Jsoup;
@@ -24,221 +42,166 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.core.convert.ConversionService;
 
-import java.util.*;
-import java.util.stream.Collectors;
-
-
+/**
+ * Implementation of the ConfigurationFormsFactory interface to create forms and form fields based
+ * on configuration properties annotated with {@link ConfigurationProperties}.
+ */
+@SuppressWarnings("squid:S1135")
 @org.springframework.stereotype.Component
 public class ConfigurationFormsFactoryImpl implements ConfigurationFormsFactory {
-
     private static final Logger LOGGER = LogManager.getLogger(ConfigurationFormsFactoryImpl.class);
-
     @Autowired
     ConfigurationPropertyCollector configurationPropertyCollector;
-
     @Autowired(required = false)
     List<ConfigurationFieldFactory> fieldCreatorFactories = new ArrayList<>();
-
     @Autowired
     javax.validation.Validator validator;
-
     @Autowired
     @UiConfigurationConversationService
     ConversionService conversionService;
 
-
+    /**
+     * Creates a ConfigurationPropertyForm instance based on the given class that is annotated
+     * with @ConfigurationProperties. The method validates the class, collects its configuration
+     * properties, and binds them to a Vaadin form layout.
+     *
+     * @param clazz The class annotated with @ConfigurationProperties from which to create the form.
+     * @return A ConfigurationPropertyForm instance populated with fields representing the
+     *      configuration properties of the class.
+     * @throws IllegalArgumentException If the provided class is not annotated with
+     *      {@code @ConfigurationProperties.}
+     */
     public ConfigurationPropertyForm createFormFromConfigurationPropertiesClass(Class clazz) {
         if (!clazz.isAnnotationPresent(ConfigurationProperties.class)) {
-            throw new IllegalArgumentException("the passed class must be annotated with " + ConfigurationProperties.class);
+            throw new IllegalArgumentException(
+                "the passed class must be annotated with " + ConfigurationProperties.class);
         }
-        Collection<ConfigurationProperty> configurationPropertyFromClazz = configurationPropertyCollector.getConfigurationPropertyFromClazz(clazz);
+        Collection<ConfigurationProperty> configurationPropertyFromClazz =
+            configurationPropertyCollector.getConfigurationPropertyFromClazz(clazz);
 
-//        BeanValidationBinder binder = new BeanValidationBinder(clazz);
         Binder<Map<String, String>> binder = new Binder<>();
 
-//        binder.withValidator(new Validator<Properties>() {
-//
-//            @Override
-//            public ValidationResult apply(Properties value, ValueContext context) {
-//                Set<ConstraintViolation<Object>> constraintViolationSet = validator.validate(value);
-//                if (constraintViolationSet.isEmpty()) {
-//                    return ValidationResult.ok();
-//                }
-//                String errors = constraintViolationSet
-//                        .stream()
-//                        .filter(constraintViolation -> {
-//
-//                            ConstraintDescriptorImpl constraintDescriptor = (ConstraintDescriptorImpl) constraintViolation.getConstraintDescriptor();
-//                            return ElementType.TYPE == constraintDescriptor.getElementType();
-//                        } )
-//                        .map(constraintViolation -> constraintViolation.getMessage())
-//
-//                        .collect(Collectors.joining("\n"));
-//                return ValidationResult.error(errors);
-//            }
-//        });
-
-        ConfigurationPropertyForm formLayout = new ConfigurationPropertyForm(clazz, binder);
+        var formLayout = new ConfigurationPropertyForm(clazz, binder);
 
         configurationPropertyFromClazz.forEach(prop -> {
-//            String label = prop.getLabel();
-            Component c = createComponentFromConfigurationProperty(prop, binder);
-            formLayout.add(c);
-//            formLayout.addFormItem(c);
+            var component = createComponentFromConfigurationProperty(prop, binder);
+            formLayout.add(component);
         });
 
-        formLayout.setValue(new HashMap<>()); //setting empty properties...
-//        try {
-//            formLayout.setValue(clazz.getDeclaredConstructor().newInstance());
-//        } catch (InstantiationException | NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
-//            throw new RuntimeException(e);
-//        }
+        formLayout.setValue(new HashMap<>()); // setting empty properties...
 
         return formLayout;
     }
 
-    public Component createComponentFromConfigurationProperty(ConfigurationProperty prop, Binder<Map<String, String>> binder) {
-        HorizontalLayout horizontalLayout = new HorizontalLayout();
-
-        AbstractField field = createField(prop, binder);
+    /**
+     * Creates a Vaadin Component from the given ConfigurationProperty and data Binder.
+     *
+     * @param prop The configuration property to create the component for.
+     * @param binder The data binder that binds the property values.
+     * @return A component that represents the configuration property.
+     */
+    public Component createComponentFromConfigurationProperty(
+        ConfigurationProperty prop, Binder<Map<String, String>> binder) {
+        var field = createField(prop, binder);
 
         field.setId(prop.getPropertyName());
 
-        Label label = new Label();
+        var label = new Label();
 
         label.setFor(field);
         label.setText(prop.getBeanPropertyName());
-        horizontalLayout.add(label);
 
+        var horizontalLayout = new HorizontalLayout();
+        horizontalLayout.add(label);
         horizontalLayout.add(field);
 
-        Button infoButton = new Button();
+        var infoButton = new Button();
         infoButton.setIcon(new Icon(VaadinIcon.INFO));
         infoButton.addClickListener(clickEvent -> {
-            //TODO: show info box about property...
+            // TODO: show info box about property...
         });
         horizontalLayout.add(infoButton);
 
         return horizontalLayout;
     }
 
-    public AbstractField createField(final ConfigurationProperty prop, final Binder<Map<String, String>> binder) {
+    /**
+     * Creates an {@link AbstractField} for a given configuration property.
+     *
+     * @param prop The configuration property to create the field for.
+     * @param binder The data binder that binds the property values.
+     * @return An {@link AbstractField} instance that corresponds to the given configuration
+     *      property.
+     * @throws RuntimeException If no suitable field factory is found for the property's type.
+     */
+    public AbstractField createField(
+        final ConfigurationProperty prop, final Binder<Map<String, String>> binder) {
         Optional<ConfigurationFieldFactory> ff = fieldCreatorFactories
-                .stream()
-                .filter(configurationFieldFactory -> configurationFieldFactory.canHandle(prop.getType()))
-                .findFirst();
+            .stream()
+            .filter(
+                configurationFieldFactory -> configurationFieldFactory.canHandle(prop.getType()))
+            .findFirst();
         AbstractField field;
         if (ff.isPresent()) {
-            ConfigurationFieldFactory configurationFieldFactory = ff.get();
+            var configurationFieldFactory = ff.get();
             field = configurationFieldFactory.createField(prop, binder);
             return field;
         } else {
-            throw new RuntimeException(String.format("No Field Factory found for property %s with type [%s]", prop, prop.getType()));
-            //Just create a simple text field...
-//            field = createField(prop, binder);
+            throw new RuntimeException(
+                String.format("No Field Factory found for property %s with type [%s]", prop,
+                              prop.getType()
+                ));
+            // Just create a simple text field...
         }
-
     }
 
-//    public AbstractField createField(final ConfigurationProperty configurationProperty, final Binder<Properties> binder) {
-//        TextField tf = new TextField();
-//
-//
-//        Class parentClass = configurationProperty.getParentClass();
-//
-//        Binder.BindingBuilder<Properties, String> propertiesStringBindingBuilder = binder.forField(tf);
-//        if (parentClass != null) {
-//            //can currently only add a validator if the parent class is known and has Bean Validation
-//            propertiesStringBindingBuilder = propertiesStringBindingBuilder.withValidator(new Validator<String>() {
-//
-//                @Override
-//                public ValidationResult apply(String value, ValueContext context) {
-//
-//
-//                    Object convertedValue = value;
-//                    try {
-//                        if (value != null) {
-//                            convertedValue = conversionService.convert(value, configurationProperty.getType());
-//                        }
-//                    } catch (ConversionFailedException conversionFailed) {
-//                        //TODO: improve error message...
-//                        return ValidationResult.error(conversionFailed.getMessage());
-//                    }
-//
-//                    Set<ConstraintViolation<?>> constraintViolationSet = validator.validateValue(parentClass, configurationProperty.getBeanPropertyName(), convertedValue);
-//                    if (constraintViolationSet.isEmpty()) {
-//                        return ValidationResult.ok();
-//                    }
-//                    String errors = constraintViolationSet.stream().map(constraintViolation -> constraintViolation.getMessage()).collect(Collectors.joining("\n"));
-//                    return ValidationResult.error(errors);
-//                }
-//            });
-//        }
-//
-//        propertiesStringBindingBuilder.withNullRepresentation("");
-//
-//        Binder.Binding<Properties, String> binding = propertiesStringBindingBuilder.bind(
-//            (ValueProvider<Properties, String>) o -> o.getProperty(configurationProperty.getPropertyName(), null),
-//            (Setter<Properties, String>) (props, value) -> {
-//                if (value == null) {
-//                    props.remove(configurationProperty.getPropertyName());
-//                }
-//                props.put(configurationProperty.getPropertyName(), value);
-//            });
-//
-//
-//        return tf;
-//    }
-
-
-    public class ConfigurationPropertyForm extends FormLayout implements HasValue<HasValue.ValueChangeEvent<Map<String, String>>, Map<String, String>> {
-
+    /**
+     * Represents a Vaadin form layout for configuration properties.
+     * This form is designed to handle mappings of property keys and values.
+     * It extends the FormLayout class and implements the HasValue interface to manage
+     * value changes and validation for the configuration properties.
+     */
+    public class ConfigurationPropertyForm extends FormLayout
+        implements HasValue<HasValue.ValueChangeEvent<Map<String, String>>, Map<String, String>> {
         private Label formStatusLabel = new Label();
-
         /**
-         * The by the factory generated binder
+         * The by the factory generated binder.
          */
         private final Binder<Map<String, String>> binder;
         /**
-         * The specific type of the with @ConfigurationProperties
-         * annotated class
+         * The specific type of the with @ConfigurationProperties annotated class.
          */
         private final Class clazz;
         private boolean readOnly;
         private Map<String, String> properties;
-//        private Object value;
 
         private ConfigurationPropertyForm(Class clazz, Binder binder) {
             this.binder = binder;
             this.clazz = clazz;
-            BinderValidationStatusHandler defaultHandler = binder
-                    .getValidationStatusHandler();
+            var defaultHandler = binder.getValidationStatusHandler();
 
-//            binder.setStatusLabel(formStatusLabel);
-
-            //see: https://vaadin.com/docs/v10/flow/binding-data/tutorial-flow-components-binder-beans.html
+            // see: https://vaadin.com/docs/v10/flow/binding-data/tutorial-flow-components-binder-beans.html
             binder.setValidationStatusHandler(status -> {
                 LOGGER.info("Binder validation status handler called: [{}]", status);
                 // create an error message on failed bean level validations
-                List<ValidationResult> errors = status
-                        .getBeanValidationErrors();
+                List<ValidationResult> errors = status.getBeanValidationErrors();
 
                 // collect all bean level error messages into a single string,
                 // separating each message with a <br> tag
                 String errorMessage = errors.stream()
-                        .map(ValidationResult::getErrorMessage)
-                        // sanitize the individual error strings to avoid code
-                        // injection
-                        // since we are displaying the resulting string as HTML
-                        .map(errorString -> Jsoup.clean(errorString,
-                                Whitelist.simpleText()))
-                        .collect(Collectors.joining("<br>"));
+                                            .map(ValidationResult::getErrorMessage)
+                                            // sanitize the individual error strings to avoid code
+                                            // injection
+                                            // since we are displaying the resulting string as HTML
+                                            .map(errorString -> Jsoup.clean(
+                                                errorString,
+                                                Whitelist.simpleText()
+                                            ))
+                                            .collect(Collectors.joining("<br>"));
 
                 // finally, display all bean level validation errors in a single
                 // label
                 formStatusLabel.getElement().setProperty("innerHTML", errorMessage);
-//                formStatusLabel.setVisible(!errorMessage.isEmpty());
-//                setVisible(formStatusLabel, !errorMessage.isEmpty());
 
                 // Let the default handler show messages for each field
                 defaultHandler.statusChange(status);
@@ -246,14 +209,6 @@ public class ConfigurationFormsFactoryImpl implements ConfigurationFormsFactory 
             this.addComponentAsFirst(formStatusLabel);
             formStatusLabel.setVisible(true);
         }
-
-//        @Override
-//        public void setValue(Object o) {
-//            if (!this.clazz.isAssignableFrom(o.getClass())) {
-//                throw new IllegalArgumentException("The passed object must be a subtype of " + this.clazz);
-//            }
-//            this.binder.setBean(o);
-//        }
 
         @Override
         public void setValue(Map<String, String> value) {
@@ -268,8 +223,6 @@ public class ConfigurationFormsFactoryImpl implements ConfigurationFormsFactory 
 
         @Override
         public Registration addValueChangeListener(ValueChangeListener valueChangeListener) {
-//            return binder.addValueChangeListener(valueChangeListener);
-//            return null;
             return null;
         }
 
@@ -285,7 +238,7 @@ public class ConfigurationFormsFactoryImpl implements ConfigurationFormsFactory 
 
         @Override
         public void setRequiredIndicatorVisible(boolean b) {
-
+            // TODO see why this body is empty
         }
 
         @Override
@@ -297,5 +250,4 @@ public class ConfigurationFormsFactoryImpl implements ConfigurationFormsFactory 
             return binder;
         }
     }
-
 }

@@ -1,12 +1,25 @@
+/*
+ * Copyright 2024 European Union Agency for the Operational Management of Large-Scale IT Systems
+ * in the Area of Freedom, Security and Justice (eu-LISA)
+ *
+ * Licensed under the EUPL, Version 1.2 or – as soon they will be approved by the
+ * European Commission - subsequent versions of the EUPL (the "Licence");
+ * You may not use this work except in compliance with the Licence.
+ * You may obtain a copy at: https://joinup.ec.europa.eu/software/page/eupl
+ */
+
 package eu.domibus.connector.lib.spring.configuration.validation;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
 
+/**
+ * A validator class that checks if a given file path is a writable directory. Implements the
+ * ConstraintValidator interface to ensure custom validation logic.
+ */
 public class FolderWriteableValidator implements ConstraintValidator<CheckFolderWriteable, Path> {
-
     @Override
     public boolean isValid(Path file, ConstraintValidatorContext context) {
         if (file == null) {
@@ -14,17 +27,21 @@ public class FolderWriteableValidator implements ConstraintValidator<CheckFolder
         }
 
         if (Files.notExists(file)) {
-            String message = String.format("Provided file path [%s] does not exist! Check if the path is correct and exists!", file);
+            var message = String.format(
+                "Provided file path [%s] does not exist! Check if the path is correct and exists!",
+                file
+            );
             context.buildConstraintViolationWithTemplate(message).addConstraintViolation();
             return false;
         }
         if (!Files.isDirectory(file)) {
-            String message = String.format("Provided file path [%s] is not a directory! Check the path!", file);
+            var message =
+                String.format("Provided file path [%s] is not a directory! Check the path!", file);
             context.buildConstraintViolationWithTemplate(message).addConstraintViolation();
             return false;
         }
         if (!Files.isWritable(file)) {
-            String message = String.format("Cannot write to provided path [%s]!", file);
+            var message = String.format("Cannot write to provided path [%s]!", file);
             context.buildConstraintViolationWithTemplate(message).addConstraintViolation();
             return false;
         }

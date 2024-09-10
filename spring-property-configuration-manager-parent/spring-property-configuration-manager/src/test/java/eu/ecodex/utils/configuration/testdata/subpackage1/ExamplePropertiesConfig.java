@@ -1,28 +1,29 @@
 package eu.ecodex.utils.configuration.testdata.subpackage1;
 
-
-
-import javax.validation.constraints.Max;
-import javax.validation.constraints.NotNull;
-
 import eu.ecodex.utils.configuration.api.annotation.ConfigurationDescription;
 import eu.ecodex.utils.configuration.api.annotation.ConfigurationLabel;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
+import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-
-
+/**
+ * Configuration properties for the example configuration.
+ *
+ * <p>This class encapsulates the configuration properties that are prefixed with
+ * "example.configuration". It holds the text property and the number property, both of which are
+ * mandatory.
+ */
+@Data
 @Component
-@ConfigurationProperties(prefix="example.configuration")
+@ConfigurationProperties(prefix = "example.configuration")
 @ConfigurationLabel("Example Configuration")
 @ConfigurationDescription("Properties for the example configuration")
 public class ExamplePropertiesConfig {
-
     @NotNull
     @ConfigurationLabel("A text")
     private String text;
-
-
     /**
      * a number which should be max 60
      */
@@ -30,21 +31,4 @@ public class ExamplePropertiesConfig {
     @ConfigurationDescription("A number.........")
     @Max(60)
     private Integer number;
-
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public Integer getNumber() {
-        return number;
-    }
-
-    public void setNumber(Integer number) {
-        this.number = number;
-    }
 }
