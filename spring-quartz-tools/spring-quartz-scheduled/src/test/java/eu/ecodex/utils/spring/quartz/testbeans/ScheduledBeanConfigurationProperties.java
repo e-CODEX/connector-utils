@@ -2,15 +2,23 @@ package eu.ecodex.utils.spring.quartz.testbeans;
 
 import eu.ecodex.utils.spring.quartz.annotation.CronStringProvider;
 import eu.ecodex.utils.spring.quartz.annotation.IntervalProvider;
+import java.time.Duration;
+import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-import java.time.Duration;
-
-@ConfigurationProperties(prefix = "test")
+/**
+ * Configuration properties for scheduling beans with intervals and cron expressions.
+ *
+ * <p>This class implements both the {@link IntervalProvider} and {@link CronStringProvider}
+ * interfaces. It is designed to be used with the
+ * {@link eu.ecodex.utils.spring.quartz.annotation.QuartzScheduled} annotation for configuring
+ * scheduled tasks.
+ */
+@Setter
 @Component
+@ConfigurationProperties(prefix = "test")
 public class ScheduledBeanConfigurationProperties implements IntervalProvider, CronStringProvider {
-
     private String cronString;
     private Duration interval;
 
@@ -19,16 +27,8 @@ public class ScheduledBeanConfigurationProperties implements IntervalProvider, C
         return cronString;
     }
 
-    public void setCronString(String cronString) {
-        this.cronString = cronString;
-    }
-
     @Override
     public Duration getInterval() {
         return interval;
-    }
-
-    public void setInterval(Duration interval) {
-        this.interval = interval;
     }
 }

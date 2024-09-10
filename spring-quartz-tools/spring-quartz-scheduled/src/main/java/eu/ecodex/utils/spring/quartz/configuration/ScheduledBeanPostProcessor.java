@@ -1,8 +1,27 @@
+/*
+ * Copyright 2024 European Union Agency for the Operational Management of Large-Scale IT Systems
+ * in the Area of Freedom, Security and Justice (eu-LISA)
+ *
+ * Licensed under the EUPL, Version 1.2 or – as soon they will be approved by the
+ * European Commission - subsequent versions of the EUPL (the "Licence");
+ * You may not use this work except in compliance with the Licence.
+ * You may obtain a copy at: https://joinup.ec.europa.eu/software/page/eupl
+ */
+
 package eu.ecodex.utils.spring.quartz.configuration;
+
+import static eu.ecodex.utils.spring.quartz.configuration.ScheduledWithQuartzConfiguration.TRIGGER_AND_JOB_DEFINITION_LIST_BEAN_NAME;
 
 import eu.ecodex.utils.spring.quartz.annotation.QuartzScheduled;
 import eu.ecodex.utils.spring.quartz.annotation.QuartzSchedules;
 import eu.ecodex.utils.spring.quartz.domain.TriggerAndJobDefinition;
+import java.lang.reflect.Method;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ScheduledExecutorService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.aop.framework.AopInfrastructureBean;
@@ -20,29 +39,21 @@ import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.lang.Nullable;
 import org.springframework.scheduling.TaskScheduler;
 
-import java.lang.reflect.Method;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ScheduledExecutorService;
-
-import static eu.ecodex.utils.spring.quartz.configuration.ScheduledWithQuartzConfiguration.TRIGGER_AND_JOB_DEFINITION_LIST_BEAN_NAME;
-
-
-public class ScheduledBeanPostProcessor implements DestructionAwareBeanPostProcessor, BeanFactoryAware, ApplicationContextAware {
-
+/**
+ * The ScheduledBeanPostProcessor class is responsible for handling beans that are annotated with
+ * the @QuartzScheduled annotation. It implements multiple interfaces to allow interaction with the
+ * Spring container and various lifecycle phases of bean processing.
+ */
+@SuppressWarnings("squid:S1135")
+public class ScheduledBeanPostProcessor
+    implements DestructionAwareBeanPostProcessor, BeanFactoryAware, ApplicationContextAware {
     private static final Logger LOGGER = LogManager.getLogger(ScheduledBeanPostProcessor.class);
-
     private ApplicationContext applicationContext;
-
-    private final Set<Class<?>> nonAnnotatedClasses = Collections.newSetFromMap(new ConcurrentHashMap<>(64));
-
+    private final Set<Class<?>> nonAnnotatedClasses =
+        Collections.newSetFromMap(new ConcurrentHashMap<>(64));
     @Autowired
     @Qualifier(TRIGGER_AND_JOB_DEFINITION_LIST_BEAN_NAME)
     private List<TriggerAndJobDefinition> triggerAndJobDefinitionList;
-
     @Nullable
     private BeanFactory beanFactory;
 
@@ -51,10 +62,9 @@ public class ScheduledBeanPostProcessor implements DestructionAwareBeanPostProce
         this.beanFactory = beanFactory;
     }
 
-
     @Override
     public void postProcessBeforeDestruction(Object o, String s) throws BeansException {
-
+        // TODO see why the body is empty
     }
 
     @Override
@@ -63,50 +73,58 @@ public class ScheduledBeanPostProcessor implements DestructionAwareBeanPostProce
         if (this.beanFactory == null) {
             this.beanFactory = applicationContext;
         }
-
     }
-
 
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) {
-        if (bean instanceof AopInfrastructureBean || bean instanceof TaskScheduler ||
-                bean instanceof ScheduledExecutorService) {
+        if (bean instanceof AopInfrastructureBean || bean instanceof TaskScheduler
+            || bean instanceof ScheduledExecutorService) {
             // Ignore AOP infrastructure such as scoped proxies.
             return bean;
         }
 
         Class<?> targetClass = AopProxyUtils.ultimateTargetClass(bean);
         if (!this.nonAnnotatedClasses.contains(targetClass)) {
-            Map<Method, Set<QuartzScheduled>> annotatedMethods = MethodIntrospector.selectMethods(targetClass,
-                    (MethodIntrospector.MetadataLookup<Set<QuartzScheduled>>) method -> {
-                        Set<QuartzScheduled> quartzScheduledMethods = AnnotatedElementUtils.getMergedRepeatableAnnotations(
-                                method, QuartzScheduled.class, QuartzSchedules.class);
-                        return (!quartzScheduledMethods.isEmpty() ? quartzScheduledMethods : null);
-                    });
+            Map<Method, Set<QuartzScheduled>> annotatedMethods = MethodIntrospector.selectMethods(
+                targetClass,
+                (MethodIntrospector.MetadataLookup<Set<QuartzScheduled>>) method -> {
+                    Set<QuartzScheduled> quartzScheduledMethods =
+                        AnnotatedElementUtils.getMergedRepeatableAnnotations(
+                            method, QuartzScheduled.class, QuartzSchedules.class);
+                    return (!quartzScheduledMethods.isEmpty() ? quartzScheduledMethods : null);
+                }
+            );
             if (annotatedMethods.isEmpty()) {
                 this.nonAnnotatedClasses.add(targetClass);
                 if (LOGGER.isTraceEnabled()) {
-                    LOGGER.trace("No @Scheduled annotations found on bean class: " + targetClass);
+                    LOGGER.trace(
+                        "No @Scheduled annotations found on bean class: {}", targetClass
+                    );
                 }
-            }
-            else {
+            } else {
                 // Non-empty set of methods
                 annotatedMethods.forEach((method, scheduledMethods) ->
-                        scheduledMethods.forEach(quartzScheduled -> processScheduled(beanName, quartzScheduled, method, bean)));
+                                             scheduledMethods.forEach(
+                                                 quartzScheduled -> processScheduled(
+                                                     beanName,
+                                                     quartzScheduled,
+                                                     method, bean
+                                                 )));
                 if (LOGGER.isTraceEnabled()) {
-                    LOGGER.trace(annotatedMethods.size() + " @Scheduled methods processed on bean '" + beanName +
-                            "': " + annotatedMethods);
+                    LOGGER.trace(
+                        "{} @Scheduled methods processed on bean '{}': {}",
+                        annotatedMethods.size(), beanName, annotatedMethods
+                    );
                 }
             }
         }
         return bean;
     }
 
-    private void processScheduled(String beanName, QuartzScheduled quartzScheduled, Method method, Object bean) {
-        TriggerAndJobDefinition definition = new TriggerAndJobDefinition(beanName, quartzScheduled, method, bean);
+    private void processScheduled(
+        String beanName, QuartzScheduled quartzScheduled, Method method, Object bean) {
+        var definition = new TriggerAndJobDefinition(beanName, quartzScheduled, method, bean);
         LOGGER.debug("Adding definition [{}]", definition);
         triggerAndJobDefinitionList.add(definition);
     }
-
-
 }
