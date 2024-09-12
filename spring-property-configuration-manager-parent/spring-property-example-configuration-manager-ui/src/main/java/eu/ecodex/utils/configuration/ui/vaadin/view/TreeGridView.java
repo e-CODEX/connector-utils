@@ -10,7 +10,6 @@
 
 package eu.ecodex.utils.configuration.ui.vaadin.view;
 
-import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.treegrid.TreeGrid;
 import com.vaadin.flow.data.provider.hierarchy.AbstractBackEndHierarchicalDataProvider;
@@ -21,8 +20,8 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import eu.ecodex.utils.configuration.domain.ConfigurationPropertyNode;
 import eu.ecodex.utils.configuration.service.ConfigurationPropertyCollector;
+import jakarta.annotation.PostConstruct;
 import java.util.stream.Stream;
-import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -30,7 +29,6 @@ import org.springframework.beans.factory.annotation.Autowired;
  * configuration properties in a vertical layout. This component fetches and manages data using a
  * HierarchicalDataProvider.
  */
-@HtmlImport("styles/shared-styles.html")
 @Route(value = "treegridview", layout = MainView.class)
 @PageTitle("Spring Properties Configuration Manager")
 public class TreeGridView extends VerticalLayout {

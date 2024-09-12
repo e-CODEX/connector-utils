@@ -11,13 +11,13 @@
 package eu.ecodex.utils.monitor.activemq.service;
 
 import eu.ecodex.utils.monitor.activemq.config.ActiveMqEndpointConfigurationProperties;
+import jakarta.jms.ConnectionFactory;
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
-import javax.jms.ConnectionFactory;
 import javax.management.MBeanServerInvocationHandler;
 import javax.management.ObjectName;
 import javax.management.QueryExp;

@@ -11,9 +11,9 @@
 package eu.ecodex.utils.monitor.activemq.service;
 
 import eu.ecodex.utils.monitor.activemq.dto.DestinationInfo;
+import jakarta.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.PostConstruct;
 import lombok.Data;
 import org.apache.activemq.broker.jmx.DestinationViewMBean;
 import org.apache.activemq.broker.jmx.QueueViewMBean;

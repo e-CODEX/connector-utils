@@ -14,7 +14,7 @@ import com.vaadin.flow.component.AbstractField;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasValue;
 import com.vaadin.flow.component.grid.Grid;
-import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.html.NativeLabel;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.binder.HasValidator;
@@ -28,6 +28,7 @@ import eu.ecodex.utils.configuration.domain.ConfigurationProperty;
 import eu.ecodex.utils.configuration.service.ConfigurationPropertyChecker;
 import eu.ecodex.utils.configuration.service.ConfigurationPropertyCollector;
 import eu.ecodex.utils.configuration.ui.vaadin.tools.ConfigurationFormsFactory;
+import jakarta.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -35,7 +36,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import javax.annotation.PostConstruct;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.logging.log4j.LogManager;
@@ -73,7 +73,7 @@ public class ListConfigurationPropertiesComponent extends VerticalLayout impleme
     @Autowired
     ConfigurationFormsFactory configurationFormFactory;
     Map<String, String> properties = new HashMap<>();
-    Label statusLabel = new Label();
+    NativeLabel statusLabel = new NativeLabel();
     Binder<Map<String, String>> binder = new Binder();
     private Collection<ConfigurationProperty> configurationProperties = new ArrayList<>();
     private Collection<AbstractField> propertyFields = new ArrayList<>();
@@ -99,8 +99,8 @@ public class ListConfigurationPropertiesComponent extends VerticalLayout impleme
         grid.setDetailsVisibleOnClick(true);
         grid.setItemDetailsRenderer(new ComponentRenderer<>(configProp -> {
             var verticalLayout = new VerticalLayout();
-            verticalLayout.add(new Label("Description"));
-            verticalLayout.add(new Label(configProp.getDescription()));
+            verticalLayout.add(new NativeLabel("Description"));
+            verticalLayout.add(new NativeLabel(configProp.getDescription()));
             return verticalLayout;
         }));
 

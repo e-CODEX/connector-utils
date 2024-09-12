@@ -12,7 +12,7 @@ package eu.domibus.connector.web.layout;
 
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Image;
-import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.html.NativeLabel;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
@@ -28,7 +28,7 @@ import eu.domibus.connector.web.utils.ViewConstant;
 @SpringComponent
 @UIScope
 public class DomibusConnectorAdminHeader extends HorizontalLayout implements BeforeEnterObserver {
-    Label currentUser = new Label();
+    NativeLabel currentUser = new NativeLabel();
 
     /**
      * Constructor.
@@ -40,7 +40,7 @@ public class DomibusConnectorAdminHeader extends HorizontalLayout implements Bef
         ecodexLogo.add(ecodex);
         ecodexLogo.setHeight("70px");
 
-        var adminLabel = new Label("domibusConnector - Administration");
+        var adminLabel = new NativeLabel("domibusConnector - Administration");
         adminLabel.getStyle().set(ViewConstant.FONT_SIZE_STYLE, "30px");
         adminLabel.getStyle().set(ViewConstant.FONT_STYLE, "italic");
         adminLabel.getStyle().set(ViewConstant.TAG_COLOR, ViewConstant.COLOR_GREY);

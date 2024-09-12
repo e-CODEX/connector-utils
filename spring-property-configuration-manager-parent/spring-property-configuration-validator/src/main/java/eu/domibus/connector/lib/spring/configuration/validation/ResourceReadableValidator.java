@@ -10,9 +10,9 @@
 
 package eu.domibus.connector.lib.spring.configuration.validation;
 
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 import java.io.IOException;
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
 import org.springframework.core.io.Resource;
 
 /**

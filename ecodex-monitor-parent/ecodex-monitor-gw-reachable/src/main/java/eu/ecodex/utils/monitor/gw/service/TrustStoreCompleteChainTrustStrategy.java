@@ -12,6 +12,7 @@ package eu.ecodex.utils.monitor.gw.service;
 
 import eu.domibus.connector.lib.spring.configuration.StoreConfigurationProperties;
 import eu.ecodex.utils.monitor.gw.config.GatewayMonitorConfigurationProperties;
+import jakarta.annotation.PostConstruct;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.KeyStore;
@@ -35,7 +36,6 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Set;
-import javax.annotation.PostConstruct;
 import org.apache.hc.core5.ssl.TrustStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

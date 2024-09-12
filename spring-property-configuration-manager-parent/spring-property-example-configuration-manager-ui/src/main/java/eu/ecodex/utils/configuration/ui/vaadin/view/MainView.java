@@ -12,14 +12,13 @@ package eu.ecodex.utils.configuration.ui.vaadin.view;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.applayout.AppLayout;
-import com.vaadin.flow.component.dependency.HtmlImport;
-import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.html.NativeLabel;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.router.PageTitle;
+import jakarta.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.Map;
-import javax.annotation.PostConstruct;
 import lombok.NoArgsConstructor;
 
 /**
@@ -27,8 +26,6 @@ import lombok.NoArgsConstructor;
  * "Spring Properties Configuration Manager" application. It includes a Tab-based navigation system
  * that allows switching between different views.
  */
-@HtmlImport("styles/shared-styles.html")
-
 @PageTitle("Spring Properties Configuration Manager")
 @NoArgsConstructor
 public class MainView extends AppLayout {
@@ -40,7 +37,7 @@ public class MainView extends AppLayout {
      */
     @PostConstruct
     public void init() {
-        this.setContent(new Label("The Content Label"));
+        this.setContent(new NativeLabel("The Content Label"));
 
         addTab(new Tab("Home"), HomeView.class);
         addTab(new Tab("TreeGridView"), TreeGridView.class);

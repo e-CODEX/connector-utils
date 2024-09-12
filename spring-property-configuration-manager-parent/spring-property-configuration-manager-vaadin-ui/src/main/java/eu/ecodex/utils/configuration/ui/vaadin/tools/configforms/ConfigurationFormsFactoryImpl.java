@@ -15,7 +15,7 @@ import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasValue;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.formlayout.FormLayout;
-import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.html.NativeLabel;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -37,7 +37,7 @@ import java.util.stream.Collectors;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jsoup.Jsoup;
-import org.jsoup.safety.Whitelist;
+import org.jsoup.safety.Safelist;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.core.convert.ConversionService;
@@ -55,7 +55,7 @@ public class ConfigurationFormsFactoryImpl implements ConfigurationFormsFactory 
     @Autowired(required = false)
     List<ConfigurationFieldFactory> fieldCreatorFactories = new ArrayList<>();
     @Autowired
-    javax.validation.Validator validator;
+    jakarta.validation.Validator validator;
     @Autowired
     @UiConfigurationConversationService
     ConversionService conversionService;
@@ -106,7 +106,7 @@ public class ConfigurationFormsFactoryImpl implements ConfigurationFormsFactory 
 
         field.setId(prop.getPropertyName());
 
-        var label = new Label();
+        var label = new NativeLabel();
 
         label.setFor(field);
         label.setText(prop.getBeanPropertyName());
@@ -163,7 +163,7 @@ public class ConfigurationFormsFactoryImpl implements ConfigurationFormsFactory 
      */
     public class ConfigurationPropertyForm extends FormLayout
         implements HasValue<HasValue.ValueChangeEvent<Map<String, String>>, Map<String, String>> {
-        private Label formStatusLabel = new Label();
+        private NativeLabel formStatusLabel = new NativeLabel();
         /**
          * The by the factory generated binder.
          */
@@ -195,7 +195,7 @@ public class ConfigurationFormsFactoryImpl implements ConfigurationFormsFactory 
                                             // since we are displaying the resulting string as HTML
                                             .map(errorString -> Jsoup.clean(
                                                 errorString,
-                                                Whitelist.simpleText()
+                                                Safelist.simpleText()
                                             ))
                                             .collect(Collectors.joining("<br>"));
 

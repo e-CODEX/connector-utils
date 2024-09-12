@@ -20,11 +20,11 @@ import com.vaadin.flow.function.ValueProvider;
 import eu.ecodex.utils.configuration.domain.ConfigurationProperty;
 import eu.ecodex.utils.configuration.ui.vaadin.tools.ConfigurationFieldFactory;
 import eu.ecodex.utils.configuration.ui.vaadin.tools.UiConfigurationConversationService;
+import jakarta.validation.ConstraintViolation;
 import java.time.Duration;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
-import javax.validation.ConstraintViolation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionFailedException;
 import org.springframework.core.convert.ConversionService;
@@ -38,7 +38,7 @@ public class DurationFieldFactory implements ConfigurationFieldFactory {
     @UiConfigurationConversationService
     ConversionService conversionService;
     @Autowired
-    javax.validation.Validator validator;
+    jakarta.validation.Validator validator;
 
     @Override
     public boolean canHandle(Class clazz) {

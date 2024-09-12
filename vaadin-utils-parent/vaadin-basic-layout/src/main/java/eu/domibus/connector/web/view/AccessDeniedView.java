@@ -10,7 +10,7 @@
 
 package eu.domibus.connector.web.view;
 
-import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.html.NativeLabel;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
@@ -31,7 +31,7 @@ import eu.domibus.connector.web.login.LoginView;
 @PageTitle("domibusConnector - Administrator")
 public class AccessDeniedView extends VerticalLayout implements BeforeEnterObserver {
     public static final String ROUTE = "accessDenied";
-    Label label = new Label();
+    NativeLabel label = new NativeLabel();
     String view = "";
 
     /**

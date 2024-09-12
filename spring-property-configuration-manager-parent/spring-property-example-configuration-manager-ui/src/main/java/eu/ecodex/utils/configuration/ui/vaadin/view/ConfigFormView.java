@@ -12,14 +12,13 @@ package eu.ecodex.utils.configuration.ui.vaadin.view;
 
 import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import eu.ecodex.utils.configuration.example1.Example1ConfigurationProperties;
 import eu.ecodex.utils.configuration.ui.vaadin.tools.ConfigurationFormsFactory;
 import eu.ecodex.utils.configuration.ui.vaadin.tools.configforms.ConfigurationFormsFactoryImpl;
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 import lombok.NoArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -32,7 +31,6 @@ import org.springframework.beans.factory.annotation.Autowired;
  * <p>This view is accessible via the route name specified by the ROUTE_NAME constant, and it uses
  * MainView as its layout. The view is titled "Spring Properties Configuration Manager".
  */
-@HtmlImport("styles/shared-styles.html")
 @Route(value = ConfigFormView.ROUTE_NAME, layout = MainView.class)
 @PageTitle("Spring Properties Configuration Manager")
 @NoArgsConstructor

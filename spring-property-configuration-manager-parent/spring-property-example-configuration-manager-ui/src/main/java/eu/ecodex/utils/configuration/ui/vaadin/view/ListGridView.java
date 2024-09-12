@@ -12,7 +12,6 @@ package eu.ecodex.utils.configuration.ui.vaadin.view;
 
 import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
@@ -20,12 +19,12 @@ import eu.ecodex.utils.configuration.domain.ConfigurationProperty;
 import eu.ecodex.utils.configuration.example1.Example1ConfigurationProperties;
 import eu.ecodex.utils.configuration.service.ConfigurationPropertyCollector;
 import eu.ecodex.utils.configuration.ui.vaadin.tools.views.ListConfigurationPropertiesComponent;
+import jakarta.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Stream;
-import javax.annotation.PostConstruct;
 import lombok.NoArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -38,7 +37,6 @@ import org.springframework.context.ApplicationContext;
  */
 @NoArgsConstructor
 @SuppressWarnings("squid:S1135")
-@HtmlImport("styles/shared-styles.html")
 @Route(value = "listgridview", layout = MainView.class)
 @PageTitle("Spring Properties Configuration Manager")
 public class ListGridView extends VerticalLayout {

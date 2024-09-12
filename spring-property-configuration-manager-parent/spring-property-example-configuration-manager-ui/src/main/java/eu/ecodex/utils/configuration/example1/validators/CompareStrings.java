@@ -13,12 +13,12 @@ package eu.ecodex.utils.configuration.example1.validators;
 import static eu.ecodex.utils.configuration.example1.validators.StringComparisonMode.EQUAL;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
+import jakarta.validation.Constraint;
+import jakarta.validation.Payload;
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
-import javax.validation.Constraint;
-import javax.validation.Payload;
 
 /**
  * Annotation to compare multiple string properties of a class based on specified criteria.

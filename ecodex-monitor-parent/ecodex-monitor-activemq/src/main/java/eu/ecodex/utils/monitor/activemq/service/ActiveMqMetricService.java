@@ -12,9 +12,9 @@ package eu.ecodex.utils.monitor.activemq.service;
 
 import io.micrometer.core.instrument.Gauge;
 import io.micrometer.core.instrument.MeterRegistry;
+import jakarta.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.PostConstruct;
 import org.apache.activemq.broker.jmx.DestinationViewMBean;
 import org.springframework.beans.factory.annotation.Autowired;
 

@@ -10,9 +10,9 @@
 
 package eu.ecodex.utils.configuration.example1.validators;
 
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 import java.util.ArrayList;
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
 
 /**
  * CompareStringsValidator is a custom Hibernate Validator constraint validator that compares

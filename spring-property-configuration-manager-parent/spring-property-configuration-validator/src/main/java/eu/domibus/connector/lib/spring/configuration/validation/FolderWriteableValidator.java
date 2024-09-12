@@ -10,10 +10,10 @@
 
 package eu.domibus.connector.lib.spring.configuration.validation;
 
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
 
 /**
  * A validator class that checks if a given file path is a writable directory. Implements the

@@ -37,7 +37,7 @@ import eu.domibus.connector.web.auth.exception.UserLoginException;
 import eu.domibus.connector.web.layout.DashboardView;
 import eu.domibus.connector.web.layout.DomibusConnectorAdminHeader;
 import eu.domibus.connector.web.utils.ViewConstant;
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
