@@ -11,9 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.boot.web.client.RootUriTemplateHandler;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.web.util.DefaultUriBuilderFactory;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(
@@ -33,7 +33,7 @@ class GatewayHealthIndicatorTest {
         var restTemplateBuilder = new RestTemplateBuilder();
         var restTemplate = restTemplateBuilder
             .uriTemplateHandler(
-                new RootUriTemplateHandler("http://localhost:" + localPort + "/actuator/health"))
+                new DefaultUriBuilderFactory("http://localhost:" + localPort + "/actuator/health"))
             .basicAuthentication("test", "test")
             .build();
 

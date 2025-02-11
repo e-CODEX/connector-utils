@@ -24,6 +24,7 @@ import java.security.cert.Certificate;
 import java.security.cert.CertificateEncodingException;
 import java.time.Duration;
 import java.time.ZonedDateTime;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -48,7 +49,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.util.Base64Utils;
 import org.springframework.util.CollectionUtils;
 
 /**
@@ -269,7 +269,7 @@ public class GatewaysCheckerService {
     private String mapToBase64String(Certificate certificate) {
         try {
             byte[] encoded = certificate.getEncoded();
-            return Base64Utils.encodeToString(encoded);
+            return Base64.getEncoder().encodeToString(encoded);
         } catch (CertificateEncodingException e) {
             throw new RuntimeException(e);
         }
