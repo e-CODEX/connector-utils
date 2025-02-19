@@ -14,15 +14,15 @@
     </description>
     <properties>
         <apache.cxf.version>4.1.0</apache.cxf.version>
-        <apache.httpclient5.version>5.3.1</apache.httpclient5.version>
+        <apache.httpclient5.version>5.4.2</apache.httpclient5.version>
         <bouncycastle.bcpkix-jdk15on.version>1.70</bouncycastle.bcpkix-jdk15on.version>
         <com.sun.jaxb-jxc.version>4.0.5</com.sun.jaxb-jxc.version>
         <com.sun.jaxb-core.version>4.0.5</com.sun.jaxb-core.version>
         <com.sun.xml.jaxb-impl.version>4.0.5</com.sun.xml.jaxb-impl.version>
-        <dbunit.version>2.8.0</dbunit.version>
+        <dbunit.version>3.0.0</dbunit.version>
         <hibernate.validator.version>8.0.1.Final</hibernate.validator.version>
         <javax.xml.jaxb-api.version>2.1</javax.xml.jaxb-api.version>
-        <junit.jupiter.version>5.11.0</junit.jupiter.version>
+        <junit.jupiter.version>5.11.4</junit.jupiter.version>
         <jvnet.maven-jaxb2-plugin.version>4.0.8</jvnet.maven-jaxb2-plugin.version>
         <lombok.version>1.18.36</lombok.version>
         <jsoup.version>1.18.1</jsoup.version>
