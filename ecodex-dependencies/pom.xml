@@ -31,7 +31,7 @@
         <vaadin.version>24.4.10</vaadin.version>
         <!--jakarta-->
         <jakarta.annotation-api.version>3.0.0</jakarta.annotation-api.version>
-        <jakarta.jakartaee-api.version>11.0.0-M4</jakarta.jakartaee-api.version>
+        <jakarta.jakartaee-api.version>11.0.0-M5</jakarta.jakartaee-api.version>
         <jakarta.jws-api.version>3.0.0</jakarta.jws-api.version>
         <jakarta.servlet-api.version>6.1.0</jakarta.servlet-api.version>
         <jakarta.validation-api.version>3.1.0</jakarta.validation-api.version>
