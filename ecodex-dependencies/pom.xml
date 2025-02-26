@@ -28,7 +28,7 @@
         <jsoup.version>1.18.1</jsoup.version>
         <slf4j-api.version>2.0.16</slf4j-api.version>
         <swagger.version>3.0.0</swagger.version>
-        <vaadin.version>24.4.10</vaadin.version>
+        <vaadin.version>24.6.5</vaadin.version>
         <!--jakarta-->
         <jakarta.annotation-api.version>3.0.0</jakarta.annotation-api.version>
         <jakarta.jakartaee-api.version>11.0.0-M4</jakarta.jakartaee-api.version>
