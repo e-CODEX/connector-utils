@@ -20,7 +20,7 @@
         <com.sun.jaxb-core.version>4.0.5</com.sun.jaxb-core.version>
         <com.sun.xml.jaxb-impl.version>4.0.5</com.sun.xml.jaxb-impl.version>
         <dbunit.version>3.0.0</dbunit.version>
-        <hibernate.validator.version>8.0.1.Final</hibernate.validator.version>
+        <hibernate.validator.version>8.0.2.Final</hibernate.validator.version>
         <javax.xml.jaxb-api.version>2.1</javax.xml.jaxb-api.version>
         <junit.jupiter.version>5.11.4</junit.jupiter.version>
         <jvnet.maven-jaxb2-plugin.version>4.0.8</jvnet.maven-jaxb2-plugin.version>
