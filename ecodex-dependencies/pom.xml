@@ -5,7 +5,7 @@
     <parent>
         <groupId>eu.ecodex.utils</groupId>
         <artifactId>ecodex-utils-parent</artifactId>
-        <version>6.0.0</version>
+        <version>6.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>ecodex-dependencies</artifactId>
     <description>
@@ -13,28 +13,28 @@
         e-Codex dependencies
     </description>
     <properties>
-        <apache.cxf.version>4.1.0</apache.cxf.version>
-        <apache.httpclient5.version>5.4.2</apache.httpclient5.version>
+        <apache.cxf.version>4.1.2</apache.cxf.version>
+        <apache.httpclient5.version>5.5</apache.httpclient5.version>
         <bouncycastle.bcpkix-jdk15on.version>1.70</bouncycastle.bcpkix-jdk15on.version>
         <com.sun.jaxb-jxc.version>4.0.5</com.sun.jaxb-jxc.version>
         <com.sun.jaxb-core.version>4.0.5</com.sun.jaxb-core.version>
         <com.sun.xml.jaxb-impl.version>4.0.5</com.sun.xml.jaxb-impl.version>
         <dbunit.version>3.0.0</dbunit.version>
-        <hibernate.validator.version>8.0.1.Final</hibernate.validator.version>
+        <hibernate.validator.version>8.0.2.Final</hibernate.validator.version>
         <javax.xml.jaxb-api.version>2.1</javax.xml.jaxb-api.version>
-        <junit.jupiter.version>5.11.4</junit.jupiter.version>
-        <jvnet.maven-jaxb2-plugin.version>4.0.8</jvnet.maven-jaxb2-plugin.version>
-        <lombok.version>1.18.36</lombok.version>
-        <jsoup.version>1.18.1</jsoup.version>
-        <slf4j-api.version>2.0.16</slf4j-api.version>
+        <junit.jupiter.version>5.13.1</junit.jupiter.version>
+        <jvnet.maven-jaxb2-plugin.version>4.0.9</jvnet.maven-jaxb2-plugin.version>
+        <lombok.version>1.18.38</lombok.version>
+        <jsoup.version>1.20.1</jsoup.version>
+        <slf4j-api.version>2.0.17</slf4j-api.version>
         <swagger.version>3.0.0</swagger.version>
-        <vaadin.version>24.4.10</vaadin.version>
+        <vaadin.version>24.7.6</vaadin.version>
         <!--jakarta-->
         <jakarta.annotation-api.version>3.0.0</jakarta.annotation-api.version>
-        <jakarta.jakartaee-api.version>11.0.0-M4</jakarta.jakartaee-api.version>
+        <jakarta.jakartaee-api.version>11.0.0-M5</jakarta.jakartaee-api.version>
         <jakarta.jws-api.version>3.0.0</jakarta.jws-api.version>
         <jakarta.servlet-api.version>6.1.0</jakarta.servlet-api.version>
-        <jakarta.validation-api.version>3.1.0</jakarta.validation-api.version>
+        <jakarta.validation-api.version>3.1.1</jakarta.validation-api.version>
         <jakarta.xml.bind-api.version>4.0.2</jakarta.xml.bind-api.version>
     </properties>
     <dependencyManagement>
