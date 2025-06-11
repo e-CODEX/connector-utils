@@ -15,7 +15,7 @@
     <properties>
         <apache.cxf.version>4.1.2</apache.cxf.version>
         <apache.httpclient5.version>5.5</apache.httpclient5.version>
-        <bouncycastle.bcpkix-jdk15on.version>1.70</bouncycastle.bcpkix-jdk15on.version>
+        <bouncycastle.bcpkix-jdk18on.version>1.81</bouncycastle.bcpkix-jdk18on.version>
         <com.sun.jaxb-jxc.version>4.0.5</com.sun.jaxb-jxc.version>
         <com.sun.jaxb-core.version>4.0.5</com.sun.jaxb-core.version>
         <com.sun.xml.jaxb-impl.version>4.0.5</com.sun.xml.jaxb-impl.version>
@@ -229,8 +229,8 @@
             </dependency>
             <dependency>
                 <groupId>org.bouncycastle</groupId>
-                <artifactId>bcpkix-jdk15on</artifactId>
-                <version>${bouncycastle.bcpkix-jdk15on.version}</version>
+                <artifactId>bcpkix-jdk18on</artifactId>
+                <version>${bouncycastle.bcpkix-jdk18on.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.httpcomponents.client5</groupId>
