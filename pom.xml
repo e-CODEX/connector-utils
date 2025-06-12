@@ -106,7 +106,7 @@
         <codehaus.build-helper-maven-plugin.version>3.6.0</codehaus.build-helper-maven-plugin.version>
         <codehaus-jaxb2-maven-plugin.version>3.3.0</codehaus-jaxb2-maven-plugin.version>
         <!-- jacoco plugin -->
-        <jacoco.version>0.8.12</jacoco.version>
+        <jacoco.version>0.8.13</jacoco.version>
     </properties>
     <build>
         <pluginManagement>
