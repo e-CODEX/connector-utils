@@ -28,7 +28,7 @@
         <dependency>
             <groupId>eu.domibus</groupId>
             <artifactId>domibus-ext-model</artifactId>
-            <version>4.1.3</version>
+            <version>5.2-gitb-2023.06.01</version>
         </dependency>
         <!--spring libs-->
         <dependency>
