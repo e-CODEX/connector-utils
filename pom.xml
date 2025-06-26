@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>eu.ecodex.utils</groupId>
     <artifactId>ecodex-utils-parent</artifactId>
-    <version>6.0.1</version>
+    <version>6.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <organization>
         <name>eu-LISA</name>
@@ -38,6 +38,11 @@
         </snapshotRepository>
     </distributionManagement>
     <repositories>
+        <repository>
+            <id>eu.domibus</id>
+            <name>CEF domibus repository</name>
+            <url>https://ec.europa.eu/cefdigital/artifact/content/groups/public/</url>
+        </repository>
         <repository>
             <id>releases</id>
             <snapshots>
@@ -101,12 +106,12 @@
         <maven.surefire-plugin.version>3.5.2</maven.surefire-plugin.version>
         <maven.war-plugin.version>3.4.0</maven.war-plugin.version>
         <!-- spring maven plugin -->
-        <spring.boot.version>3.5.0</spring.boot.version>
+        <spring.boot.version>3.5.3</spring.boot.version>
         <!-- codehaus maven plugins -->
         <codehaus.build-helper-maven-plugin.version>3.6.0</codehaus.build-helper-maven-plugin.version>
         <codehaus-jaxb2-maven-plugin.version>3.3.0</codehaus-jaxb2-maven-plugin.version>
         <!-- jacoco plugin -->
-        <jacoco.version>0.8.12</jacoco.version>
+        <jacoco.version>0.8.13</jacoco.version>
     </properties>
     <build>
         <pluginManagement>

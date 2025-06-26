@@ -5,14 +5,13 @@
     <parent>
         <groupId>eu.ecodex.utils</groupId>
         <artifactId>spring-property-configuration-manager-parent</artifactId>
-        <version>6.0.1</version>
+        <version>6.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>spring-property-configuration-manager-api</artifactId>
     <dependencies>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
-            <version>6.1.16</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>

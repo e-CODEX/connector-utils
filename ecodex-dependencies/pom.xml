@@ -5,7 +5,7 @@
     <parent>
         <groupId>eu.ecodex.utils</groupId>
         <artifactId>ecodex-utils-parent</artifactId>
-        <version>6.0.1</version>
+        <version>6.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>ecodex-dependencies</artifactId>
     <description>
@@ -20,6 +20,7 @@
         <com.sun.jaxb-core.version>4.0.5</com.sun.jaxb-core.version>
         <com.sun.xml.jaxb-impl.version>4.0.5</com.sun.xml.jaxb-impl.version>
         <dbunit.version>3.0.0</dbunit.version>
+        <domibus.version>5.1.8</domibus.version>
         <hibernate.validator.version>8.0.2.Final</hibernate.validator.version>
         <javax.xml.jaxb-api.version>2.1</javax.xml.jaxb-api.version>
         <junit.jupiter.version>5.13.1</junit.jupiter.version>
@@ -31,7 +32,7 @@
         <vaadin.version>24.7.6</vaadin.version>
         <!--jakarta-->
         <jakarta.annotation-api.version>3.0.0</jakarta.annotation-api.version>
-        <jakarta.jakartaee-api.version>11.0.0-M5</jakarta.jakartaee-api.version>
+        <jakarta.jakartaee-api.version>11.0.0</jakarta.jakartaee-api.version>
         <jakarta.jws-api.version>3.0.0</jakarta.jws-api.version>
         <jakarta.servlet-api.version>6.1.0</jakarta.servlet-api.version>
         <jakarta.validation-api.version>3.1.1</jakarta.validation-api.version>
@@ -69,6 +70,11 @@
                 <groupId>eu.ecodex.utils</groupId>
                 <artifactId>spring-property-configuration-validator</artifactId>
                 <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>eu.domibus</groupId>
+                <artifactId>domibus-ext-model</artifactId>
+                <version>${domibus.version}</version>
             </dependency>
             <!--spring libs-->
             <dependency>

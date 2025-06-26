@@ -77,7 +77,7 @@ public class PModeDownloader {
         ResponseEntity<PModeArchiveInfoDTO> currentPMode =
             restTemplate.getForEntity("/ext/pmode/current", PModeArchiveInfoDTO.class);
 
-        int pmodeId = -1;
+        long pmodeId;
         LOGGER.debug("Retrieved json [{}]", currentPMode);
 
         pmodeId = currentPMode.getBody().getId();
