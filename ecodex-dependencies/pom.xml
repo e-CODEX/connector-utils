@@ -23,10 +23,10 @@
         <domibus.version>5.1.8</domibus.version>
         <hibernate.validator.version>8.0.2.Final</hibernate.validator.version>
         <javax.xml.jaxb-api.version>2.1</javax.xml.jaxb-api.version>
-        <junit.jupiter.version>5.13.1</junit.jupiter.version>
+        <junit.jupiter.version>5.13.2</junit.jupiter.version>
         <jvnet.maven-jaxb2-plugin.version>4.0.9</jvnet.maven-jaxb2-plugin.version>
         <lombok.version>1.18.38</lombok.version>
-        <jsoup.version>1.20.1</jsoup.version>
+        <jsoup.version>1.21.1</jsoup.version>
         <slf4j-api.version>2.0.17</slf4j-api.version>
         <swagger.version>3.0.0</swagger.version>
         <vaadin.version>24.7.6</vaadin.version>
